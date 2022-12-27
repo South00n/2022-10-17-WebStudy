@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="table.css">
+<!-- 
+	 <ul>
+	  |
+	 <li>
+	  
+	 <ol>
+	  |
+	 <li>
+	 
+	 <table>
+	   |
+	  <tr>
+	   |
+	 ----------
+	 |		  |
+	<td>	 <th>
+	
+	
+	 <dl>
+	  |
+	 <dt> 데이터
+	 <dd> 데이터에 대한 설명
+	 
+	 <select>
+	    |
+	 <option>
+ -->
+   <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+   <script type="text/javascript">
+   let i = 0;
+     $(function () {
+		$('#delBtn').click(function () {
+			if(i==0){
+				$('#del').show();
+				i=1;
+			} else {
+				$('#del').hide();
+				i=0;
+			}
+		})
+	})
+   </script>
+</head>
+<body>
+  <center>
+    <h1>내용보기</h1>
+    <table id="table_content" width="650">
+      <tr>
+        <th width=20%>번호</th>
+        <td width=30% align="center">1</td>
+        <th width=20%>작성일</th>
+        <td width=30% align="center">2022-12-27</td>
+      </tr>
+      <tr>
+        <th width=20%>이름</th>
+        <td width=30% align="center">홍길동</td>
+        <th width=20%>조회수</th>
+        <td width=30% align="center">10</td>
+      </tr>
+      <tr>
+        <th width=20%>제목</th>
+        <td colspan="3">삼성증권 "국내주식, 1월에 사서 4월에 팔아라"</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="left" valign="top" height="200">
+        개인 투자자들은 한 해가 시작되는 1월에 주식을 가장 많이 순매수하고, 4월에 가장 높은 수익률을 올리는 것으로 나타났다.
+		삼성증권은 2016년부터 올해까지 개인이 순매수한 국내 상장 주식의 월 평균 수익률 등을 분석한 결과를 27일 발표했다.
+		지난 7년간 개인은 1월에 가장 강한 순매수세를 보였다. 평균 6조원을 순매수해 월평균 순매수 규모(2조원)를 크게 웃돌았다.
+      </tr>
+      <tr>
+        <td colspan="4" align="right">
+      	  <input type="button" value="답변">
+      	  <input type="button" value="수정">
+      	  <input type="button" value="삭제" id="delBtn">
+      	  <input type="button" value="목록">
+      	</td>
+      </tr>
+      <tr style="display: none" id="del">
+        <td colspan="4" align="right">
+          비밀번호 : <input type="password" size="15">
+        </td>
+      </tr>
+    </table>
+  </center>
+</body>
+</html>
