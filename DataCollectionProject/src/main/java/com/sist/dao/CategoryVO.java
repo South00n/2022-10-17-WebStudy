@@ -1,16 +1,14 @@
 package com.sist.dao;
 /*
-	CNO     NOT NULL NUMBER        
+ *  CNO     NOT NULL NUMBER        
 	TITLE   NOT NULL VARCHAR2(100) 
 	SUBJECT NOT NULL VARCHAR2(200) 
 	POSTER  NOT NULL VARCHAR2(300) 
-	LINK    NOT NULL VARCHAR2(200) 
+	LINK    NOT NULL VARCHAR2(200)
  */
-
 public class CategoryVO {
-	private int cno;
-	private String title, subject, poster, link;
-	
+    private int cno;
+    private String title,subject,poster,link;
 	public int getCno() {
 		return cno;
 	}
@@ -41,5 +39,5 @@ public class CategoryVO {
 	public void setLink(String link) {
 		this.link = link;
 	}
-	
+   
 }
