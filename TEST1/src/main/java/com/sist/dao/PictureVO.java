@@ -7,8 +7,14 @@ package com.sist.dao;
  */
 public class PictureVO {
 	private int ppno;
-	private String image, title, content;
+	private String image, title, name, content;
 	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public int getPpno() {
 		return ppno;
 	}
