@@ -19,7 +19,7 @@ public class DataCollectionService {
    public static void main(String[] args) {
       DataCollectionService ds = new DataCollectionService();
       //ds.pictureGetData();
-      ds.exhibitionGetData();
+      //ds.exhibitionGetData();
    }
    
    public void pictureGetData() {
@@ -71,21 +71,24 @@ public class DataCollectionService {
       
    }
    /*
-    ENO    NOT NULL NUMBER        
+    PENO    NOT NULL NUMBER        
 	POSTER  NOT NULL VARCHAR2(260) 
 	TITLE   NOT NULL VARCHAR2(150) 
+	TITLE2           VARCHAR2(150) 
 	KIND             VARCHAR2(60)  
 	PERIOD  NOT NULL VARCHAR2(100) 
 	LOC     NOT NULL VARCHAR2(60)  
-	LOC2             VARCHAR2(60)  
+	LOC2             VARCHAR2(100) 
 	AREA             VARCHAR2(200) 
+	AREA2            VARCHAR2(200) 
 	ITEM             CLOB          
+	HOST             VARCHAR2(450) 
 	URL              VARCHAR2(200) 
-	PRICE   NOT NULL CLOB          
-	TIME    NOT NULL VARCHAR2(300) 
+	PRICE            CLOB          
+	TIME             VARCHAR2(400) 
 	HASHTAG          CLOB          
 	GOOD             NUMBER        
-	CONTENT          CLOB
+	CONTENT          CLOB 
     */
    
    public void exhibitionGetData() {
@@ -97,7 +100,7 @@ public class DataCollectionService {
 		   Elements src = doc.select("a.menu_dep3_link");
 		   
 		   for(int i = 1; i < src.size(); i++) {
-			   if(i == 107 || i == 478 || i == 611 || i == 982 ) continue;
+			   if(i == 107 || i == 478 || i == 611 || i == 982 ) continue; // 오류나는부분 스킵
 			   ExhibitionVO vo = new ExhibitionVO();
 			   StringTokenizer st = new StringTokenizer("https://www.showala.com" + src.get(i).attr("href"));
 			   //String s = "https://www.showala.com" + src.get(i).attr("href");

@@ -3,21 +3,21 @@ package com.sist.dao;
 PENO    NOT NULL NUMBER        
 POSTER  NOT NULL VARCHAR2(260) 
 TITLE   NOT NULL VARCHAR2(150) 
-TITLE2  NOT NULL VARCHAR2(150) 
+TITLE2           VARCHAR2(150) 
 KIND             VARCHAR2(60)  
 PERIOD  NOT NULL VARCHAR2(100) 
 LOC     NOT NULL VARCHAR2(60)  
-LOC2             VARCHAR2(60)  
+LOC2             VARCHAR2(100) 
 AREA             VARCHAR2(200) 
 AREA2            VARCHAR2(200) 
 ITEM             CLOB          
-HOST             VARCHAR2(200) 
+HOST             VARCHAR2(450) 
 URL              VARCHAR2(200) 
-PRICE   NOT NULL CLOB          
-TIME    NOT NULL VARCHAR2(300) 
+PRICE            CLOB          
+TIME             VARCHAR2(400) 
 HASHTAG          CLOB          
 GOOD             NUMBER        
-CONTENT          CLOB
+CONTENT          CLOB 
  */
 public class ExhibitionVO {
 	private int peno, good;
