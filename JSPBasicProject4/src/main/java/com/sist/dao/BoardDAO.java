@@ -152,7 +152,6 @@ public class BoardDAO {
 			disConnection();
 		}
 	}
-	// 수정  => pwd일치여부 => javaScript
 	// 수정 데이터 읽기
 	// 1. Ajax, VueJS, ReactJS, Timeleaf
 	public BoardVO boardUpdateData(int no) {
@@ -179,6 +178,88 @@ public class BoardDAO {
 		}
 		return vo;
 	}
+	// 수정  => pwd일치여부 => javaScript
+	public boolean boardUpdate(BoardVO vo) { // 수정할 데이터 여러개 => VO, 한개, 두개, 일반변수
+		// boolean => 비밀번호가 맞는 경우 / 틀린경우 => 경우의수가 여러개면 int, String, 두개명 : boolean
+		// 수정 => 비밀번호(O) => 수정하고 상세보기로 이동, 비밀번호(X) => 수정없이 이전화면으로 이동
+		boolean bCheck = false;
+		try {
+			// 1. 연결
+			getConnection();
+			// 2. SQL => 두번 수행
+			// 2-1 => 비밀번호 확인
+			String sql = "SELECT pwd FROM jsp_board "
+					+ "WHERE no=?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, vo.getNo());
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			String db_pwd = rs.getString(1);
+			rs.close();
+			
+			// 비밀번호를 체크
+			if(db_pwd.equals(vo.getPwd())) {
+				bCheck = true;
+				// 실제 수정
+				sql = "UPDATE jsp_board SET "
+					+ "name=?, subject=?, content=? " //regdate=SYSDATE 수정날짜 
+					+ "WHERE no=?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, vo.getName());
+				ps.setString(2, vo.getSubject());
+				ps.setString(3, vo.getContent());
+				ps.setInt(4, vo.getNo());
+				
+				// 실행 명령
+				ps.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		
+		return bCheck;
+	}
 	// 삭제  => -----------------
+	public boolean boardDelete(int no, String pwd) {
+		boolean bCheck = false;
+		try {
+			getConnection();
+			// 비밀번호 체크
+			String sql = "SELECT pwd FROM jsp_board "
+					+ "WHERE no=?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			String db_pwd = rs.getString(1);
+			rs.close();
+			
+			if(db_pwd.equals(pwd) ) {
+				// 삭제
+				sql = "DELETE FROM jsp_board "
+					+ "WHERE no=?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, no);
+				ps.executeUpdate();
+				
+				bCheck=true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		return bCheck;
+	}
 	// 찾기  => <select> <checkbox> ==> 파일안에서 처리
 }
+
+
+
+
+
+
+
+
