@@ -76,7 +76,7 @@
    case 2:
 	   jsp="../food/food_detail.jsp";
 	   break;
-   }
+   } // 자바로 빼서 코딩 JSPBasicProject6 com.sist.change처럼
    
    String log_jsp="";
    String id=(String)session.getAttribute("id");
