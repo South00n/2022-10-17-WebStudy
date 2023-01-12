@@ -72,7 +72,7 @@
                if(startPage>1)
                {
             %>
-                    <li><a href="../main/main.jsp?mode=4&page=<%=startPage-1%>">&lt;</a></li>
+                    <li><a href="../main/main.jsp?mode=4&page=<%=startPage-1%>&addr=<%=addr%>">&lt;</a></li>
            <%
                }
            %>
@@ -80,7 +80,7 @@
               for(int i=startPage; i<=endPage;i++)
               {
            %>
-                 <li <%= i==curpage?"class=active":"" %>><a href="../main/main.jsp?mode=4&page=<%=i%>"><%=i %></a></li>
+                 <li <%= i==curpage?"class=active":"" %>><a href="../main/main.jsp?mode=4&page=<%=i%>&addr=<%=addr%>"><%=i %></a></li>
            <%
               }
            %>
@@ -88,7 +88,7 @@
                  if(endPage<totalpage)
                  {
            %>
-                    <li><a href="../main/main.jsp?mode=4&page=<%=endPage+1%>">&gt;</a></li>
+                    <li><a href="../main/main.jsp?mode=4&page=<%=endPage+1%>&addr=<%=addr%>">&gt;</a></li>
            <%
                  }
            %>
