@@ -1,16 +1,17 @@
 package com.sist.change;
 
 public class JspChange {
-	private static String[] jsp = {
-			"../main/home.jsp",
-			"../seoul/location.jsp",
-			"../seoul/nature.jsp",
-			"../seoul/shop.jsp",
-			"../food/location.jsp",
-			"../databoard/list.jsp"
-	};
-	public static String change(int no) {
-		return jsp[no];
-	}
-	
+   private static String[] jsp={
+         "../main/home.jsp",
+         "../seoul/location.jsp",
+         "../seoul/nature.jsp",
+         "../seoul/shop.jsp",
+         "../food/food_find.jsp",
+         "../databoard/list.jsp",
+         "../food/food_detail.jsp"
+   };
+   public static String change(int no)
+   {
+      return jsp[no];
+   }
 }
