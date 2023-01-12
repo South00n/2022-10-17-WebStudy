@@ -5,7 +5,9 @@ public class JspChange {
 			"../main/home.jsp",
 			"../seoul/location.jsp",
 			"../seoul/nature.jsp",
-			"../seoul/shop.jsp"
+			"../seoul/shop.jsp",
+			"../food/location.jsp",
+			"../databoard/list.jsp"
 	};
 	public static String change(int no) {
 		return jsp[no];

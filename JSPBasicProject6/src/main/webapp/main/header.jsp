@@ -29,6 +29,7 @@
 	        <ul class="dropdown-menu">
 	          <%-- 블록별 페이지 나누기 --%>
 	          <li><a href="../main/main.jsp?mode=1">명소</a></li>
+	          <%-- 페이지나누기 --%>
 	          <li><a href="../main/main.jsp?mode=2">자연&관광</a></li>
 	          <li><a href="../main/main.jsp?mode=3">쇼핑</a></li>
 	        </ul>
@@ -43,8 +44,8 @@
 	          <li><a href="#">신상품</a></li>
 	        </ul>
 	      </li>
-	      <li><a href="#">커뮤니티</a></li>
-	      <li><a href="#">맛집검색</a></li>
+	      <li><a href="../main/main.jsp?mode=5">커뮤니티</a></li>
+	      <li><a href=../main/main.jsp?mode=4">맛집검색</a></li>
 	      
 	    </ul>
 	  </div>
