@@ -1,5 +1,5 @@
 package com.sist.change;
-
+// MVC => 전송
 public class JspChange {
    private static String[] jsp={
          "../main/home.jsp",
@@ -9,7 +9,10 @@ public class JspChange {
          "../food/food_find.jsp",
          "../databoard/list.jsp",
          "../food/food_detail.jsp",
-         "../databoard/insert.jsp"
+         "../databoard/insert.jsp",
+         "../databoard/detail.jsp",
+         "../databoard/delete.jsp",
+         "../databoard/update.jsp"
    };
    public static String change(int no)
    {

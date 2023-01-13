@@ -196,9 +196,190 @@ public class DataBoardDAO {
 		}
 	}
 	// 3-3. 상세보기 => 조회수증가, 다운로드 => response.setHeader()
+	public DataBoardVO databoardDetailData(int no) {
+		DataBoardVO vo = new DataBoardVO();
+		try {
+			
+			getConnection();
+			// 2-1 : 조회수증가
+			String sql = "UPDATE databoard SET "
+					+ "hit = hit + 1 "
+					+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no);
+			ps.executeUpdate();
+			//////////////////////////////////// 조회수 증가
+			// 상세 볼 데이터 읽기
+			sql = "SELECT no, name, subject, content, TO_CHAR(regdate, 'YYYY-MM-DD'), hit, filename, filesize "
+					+ "FROM databoard "
+					+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			/*
+			 *  1) 회원가입 => 로그인, 회원가입, 회원수정, 회원탈퇴, 아이디 찾기, 비밀번호 찾기
+			 *  게시판 => 계층형 댓글, 묻고 답하기
+			 *  예약, 결제, 추천
+			 */
+			ps.setInt(1, no);
+			// 결과값 읽기
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			vo.setNo(rs.getInt(1));
+			vo.setName(rs.getString(2));
+			vo.setSubject(rs.getString(3));
+			vo.setContent(rs.getString(4));
+			vo.setDbday(rs.getString(5));
+			vo.setHit(rs.getInt(6));
+			vo.setFilename(rs.getString(7));
+			vo.setFilesize(rs.getInt(8));
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		return vo;
+	}
+	// 총페이지
+	public int databoardRowCount() {
+		int count = 0;
+		try {
+			// 1. 주소 읽기
+			getConnection();
+			// 2. SQL문장 만들기
+			String sql = "SELECT COUNT(*) FROM databoard";
+			// 3. SQL문장 전송
+			ps = conn.prepareStatement(sql);
+			// 4. 실행 결과 받기
+			ResultSet rs = ps.executeQuery();
+			// 5. 변수에 저장
+			rs.next(); // 데이터가 출력된 위치로 커서 이동
+			count = rs.getInt(1);
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		return count;
+	}
 	// 3-4. 수정 => 파일명이 변경이 되었을떄 기존 제거 => 새로운 파일 추가
 	// 3-5. 삭제 => 파일과 동시에 삭제
-
+	// 데이터 삭제 전에 파일 삭제를 먼저해야 한다 => 데이터베이스 삭제
+	public DataBoardVO databoardInfoData(int no) { // 먼저 처리해야되는 부분
+		DataBoardVO vo = new DataBoardVO();
+		try {
+			getConnection();
+			String sql = "SELECT filename, filesize FROM databoard "
+					+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			vo.setFilename(rs.getString(1));
+			vo.setFilesize(rs.getInt(2));
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		return vo;
+	}
+	public boolean databoardDelete(int no, String pwd) {
+		boolean bCheck = false;
+		try {
+			getConnection();
+			String sql = "SELECT pwd FROM databoard "
+					+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			String db_pwd = rs.getString(1);
+			rs.close();
+			
+			if(db_pwd.equals(pwd)) { // 삭제 (본인여부) ==> 자동으로 생성
+				bCheck = true;
+				// 실제 데이터베이스에서 삭제
+				sql = "DELETE FROM databoard "
+					+ "WHERE no = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, no);
+				ps.executeUpdate();
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection(); 
+		}
+		return bCheck;
+	}
+	
+	// 수정 데이터 가지고 오기
+	public DataBoardVO databoardUpdateData(int no) {
+		DataBoardVO vo = new DataBoardVO();
+		try {
+			
+			getConnection();
+			String sql = "SELECT no, name, subject, content "
+						+ "FROM databoard "
+						+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, no);
+			// 결과값 읽기
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			vo.setNo(rs.getInt(1));
+			vo.setName(rs.getString(2));
+			vo.setSubject(rs.getString(3));
+			vo.setContent(rs.getString(4));
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		return vo;
+	}
+	// 실제 수정
+	public boolean databoardUpdate(DataBoardVO vo) {
+		boolean bCheck = false;
+		try {
+			getConnection();
+			// 비밀번호 검색
+			String sql = "SELECT pwd FROM databoard "
+					+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, vo.getNo());
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			String db_pwd = rs.getString(1);
+			rs.close();
+			
+			if(db_pwd.equals(vo.getPwd())) {
+				bCheck = true;
+				sql = "UPDATE databoard SET "
+					+ "name = ?, subject=?, content=? "
+					+ "WHERE no=?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, vo.getName());
+				ps.setString(2, vo.getSubject());
+				ps.setString(3, vo.getContent());
+				ps.setInt(4, vo.getNo());
+				ps.executeUpdate();
+				
+			} else {
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		return bCheck;
+	}
 }
 
 

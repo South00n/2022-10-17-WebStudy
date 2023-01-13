@@ -17,6 +17,10 @@
     // 3. 출력 => HTML
     		
     // ** 데이터를 자바에서 읽은 다음에 출력 (자바는 데이터 관리) => HTML은 가지고 온 데이터를 출력만 한다(정적페이지) => JSP (동적페이지)
+	// 총 페이지 받기
+	int totalpage = (int)(Math.ceil(dao.databoardRowCount()/ 10.0)); //자바로 총 페이지 구하기
+    int count = dao.databoardRowCount(); // 숫자 일정하게 배치
+    count = count - ((curpage * 10)-10);
 %>
 <!DOCTYPE html>
 <html>
@@ -53,8 +57,14 @@
 	       for(DataBoardVO vo : list) {
 	   %>
 			   <tr>
-			     <td width=10% class="text-center"><%=vo.getNo() %></td>
-			     <td width=40% ><%=vo.getSubject() %></td>
+			     <td width=10% class="text-center"><%=count-- %></td>
+			     <td width=40%><a href="../main/main.jsp?mode=8&no=<%=vo.getNo()%>"><%=vo.getSubject() %></a></td>
+			     <%--
+			         include => include된 모든 JSP에서 main으로 들어오는 request를 공유
+			         main.jsp => 화면 변경 ==> 구분자 (mode)
+			         &뒤에 있는 데이터 => 각 JSP에서 사용하는 값
+			         mode=8 ==> 상세보기를 include한다
+			     --%>
 			     <td width=15% class="text-center"><%=vo.getName() %></td>
 			     <td width=15% class="text-center"><%=vo.getDbday() %></td>
 			     <td width=10% class="text-center"><%=vo.getHit() %></td>
@@ -76,9 +86,9 @@
 	  <table class="table">
 	    <tr>
 	      <td class="text-right">
-	        <a href="#" class="btn btn-sm btn-info">이전</a>
-	        1 page / 2 pages
-	        <a href="#" class="btn btn-sm btn-warning">다음</a>
+	        <a href="../main/main.jsp?mode=5&page=<%=curpage>1?curpage-1:curpage %>" class="btn btn-sm btn-info">이전</a>
+	        <%=curpage %> page / <%=totalpage %> pages
+	        <a href="../main/main.jsp?mode=5&page=<%=curpage<totalpage?curpage+1:curpage %>" class="btn btn-sm btn-warning">다음</a>
 	      </td>
 	    </tr>
 	  </table>
