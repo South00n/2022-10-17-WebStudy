@@ -35,7 +35,7 @@
       </li>
       <li><a class="drop" href="#">맛집</a>
         <ul>
-          <li><a href="pages/gallery.html">지역별맛집검색</a></li>
+          <li><a href="../food/food_location.do">지역별맛집검색</a></li> <%-- .do가 나오면 DispatcherServlet 호출 --%>
           <li><a href="pages/full-width.html">맛집추천</a></li>
           <li><a href="pages/sidebar-left.html">맛집예약</a></li>
         </ul>

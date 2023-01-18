@@ -57,9 +57,7 @@ public class GoodsDAO {
       }
       return total;
    }
-   // 2. 특가
-   
-   // 3. 베스트
+   // 2. 베스트
    public ArrayList<GoodsVO> goodsBestListData(int page){
 	      ArrayList<GoodsVO> list=new ArrayList<GoodsVO>();
 	      try {
@@ -108,7 +106,7 @@ public class GoodsDAO {
 	      }
 	      return total;
 	   }
-	   // 신상품
+	   // 3. 신상품
 	   public ArrayList<GoodsVO> goodsNewListData(int page){
 		      ArrayList<GoodsVO> list=new ArrayList<GoodsVO>();
 		      try {
@@ -157,5 +155,6 @@ public class GoodsDAO {
 		      }
 		      return total;
 		   }
-   
+	  // 4. 특가
+	  
 }
