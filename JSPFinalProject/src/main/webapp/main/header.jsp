@@ -59,9 +59,9 @@
       <li><a class="drop" href="#">스토어</a>
         <ul>
           <li><a href="../goods/goods_all.do">전체</a></li>
-          <li><a href="pages/full-width.html">신상품</a></li>
-          <li><a href="pages/full-width.html">특가</a></li>
-          <li><a href="pages/full-width.html">베스트</a></li>
+          <li><a href="../goods/goods_new.do">신상품</a></li>
+          <li><a href="../goods/goods_sp.do">특가</a></li>
+          <li><a href="../goods/goods_best.do">베스트</a></li>
         </ul>
       </li>
       <li><a class="drop" href="#">커뮤니티</a>
