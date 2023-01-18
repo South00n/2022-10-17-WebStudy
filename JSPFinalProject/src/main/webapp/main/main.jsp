@@ -11,7 +11,8 @@
 <body id="top">
 <jsp:include page="header.jsp"></jsp:include>
 <!-- ############################################## Header ############################################## -->
-<jsp:include page="home.jsp"></jsp:include>
+<%-- <jsp:include page="home.jsp"></jsp:include> --%>
+<jsp:include page="${main_jsp }"></jsp:include>
 <!-- ############################################## Home ############################################## -->
 <jsp:include page="footer.jsp"></jsp:include>
 <!-- ############################################## Footer ############################################## -->

@@ -25,7 +25,7 @@
 <div class="wrapper row2">
   <nav id="mainav" class="clear"> 
     <ul class="clear">
-      <li class="active"><a href="index.html">Home</a></li>
+      <li class="active"><a href="../main/main.do">Home</a></li>
       <li><a class="drop" href="#">회원</a>
         <ul>
           <li><a href="pages/gallery.html">회원가입</a></li>
@@ -58,7 +58,7 @@
       </li>
       <li><a class="drop" href="#">스토어</a>
         <ul>
-          <li><a href="pages/gallery.html">전체</a></li>
+          <li><a href="../goods/goods_all.do">전체</a></li>
           <li><a href="pages/full-width.html">신상품</a></li>
           <li><a href="pages/full-width.html">특가</a></li>
           <li><a href="pages/full-width.html">베스트</a></li>
