@@ -84,4 +84,28 @@ public class GoodsModel {
 		request.setAttribute("main_jsp", "../goods/goods_new.jsp"); // main.jsp에서 include되는 파일 지정
 		return "../main/main.jsp";
 	}
+	@RequestMapping("goods/goods_sp.do")
+	public String goodsSpecial(HttpServletRequest request, HttpServletResponse response) {
+		String page = request.getParameter("page");
+		if (page == null) {
+			page = "1";
+		}
+		int curpage = Integer.parseInt(page);
+		GoodsDAO dao = new GoodsDAO();
+		ArrayList<GoodsVO> list = dao.goodsSpecialListData(curpage);
+		int totalpage = dao.goodsSpecialTotalPage();
+		
+		final int BLOCK = 10;
+		int startPage = ((curpage-1)/BLOCK*BLOCK) + 1;
+		int endPage = ((curpage-1)/BLOCK * BLOCK) + BLOCK;
+		if (endPage > totalpage)
+			 endPage = totalpage;
+		request.setAttribute("list", list);
+		request.setAttribute("curpage", curpage);
+		request.setAttribute("totalpage", totalpage);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);
+		request.setAttribute("main_jsp", "../goods/goods_sp.jsp"); // main.jsp에서 include되는 파일 지정
+		return "../main/main.jsp";
+	}
 }

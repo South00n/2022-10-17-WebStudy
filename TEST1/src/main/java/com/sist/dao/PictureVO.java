@@ -6,7 +6,7 @@ package com.sist.dao;
 	CONTENT          CLOB           
  */
 public class PictureVO {
-	private int ppno;
+	private int gpno;
 	private String image, title, name, content;
 	
 	public String getName() {
@@ -15,11 +15,11 @@ public class PictureVO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getPpno() {
-		return ppno;
+	public int getGpno() {
+		return gpno;
 	}
-	public void setPpno(int ppno) {
-		this.ppno = ppno;
+	public void setGpno(int gpno) {
+		this.gpno = gpno;
 	}
 	public String getImage() {
 		return image;

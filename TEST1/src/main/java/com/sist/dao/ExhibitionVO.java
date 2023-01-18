@@ -20,14 +20,14 @@ GOOD             NUMBER
 CONTENT          CLOB 
  */
 public class ExhibitionVO {
-	private int peno, good;
+	private int geno, good;
 	private String poster, title, title2, kind, period, loc, loc2, area, area2,
 					item, host, url, price, time, hashtag, content;
-	public int getPeno() {
-		return peno;
+	public int getGeno() {
+		return geno;
 	}
-	public void setPeno(int peno) {
-		this.peno = peno;
+	public void setGeno(int geno) {
+		this.geno = geno;
 	}
 	public int getGood() {
 		return good;

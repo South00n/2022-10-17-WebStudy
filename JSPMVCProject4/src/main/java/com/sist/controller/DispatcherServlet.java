@@ -32,7 +32,7 @@ public class DispatcherServlet extends HttpServlet {
 			// xml의 경로명을 읽을때 사용 => Mac/Window의 경로 호환
 			URL url = this.getClass().getClassLoader().getResource(".");
 			File file = new File(url.toURI());
-			//System.out.println(file.getPath());
+			System.out.println(file.getPath());
 			String path = file.getPath();
 			path = path.replace("\\", File.separator);
 			path = path.substring(0, path.lastIndexOf(File.separator));

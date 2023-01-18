@@ -8,7 +8,7 @@ public class PictureDAO {
 	
 	private Connection conn;
 	private PreparedStatement ps;
-	private final String url = "jdbc:oracle:thin:@localhost:1521:XE";
+	private final String url = "jdbc:oracle:thin:@211.63.89.131:1521:XE";
 	
 	public PictureDAO() {
 		try {
@@ -32,8 +32,8 @@ public class PictureDAO {
 	public void pictureDetailInsert(PictureVO vo) {
 		try {
 			getConnection();
-			String sql = "INSERT INTO project_picture_3(ppno, image, title, name, content) "
-					+ "VALUES(pp_ppno_seq_3.nextval, ?, ?, ?, ?)";
+			String sql = "INSERT INTO god_picture_3(gpno, image, title, name, content) "
+					+ "VALUES(gp_gpno_seq_3.nextval, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, vo.getImage());
 			ps.setString(2, vo.getTitle());
@@ -51,8 +51,8 @@ public class PictureDAO {
 	public void ExhibitionDetailInsert(ExhibitionVO vo) {
 		try {
 			getConnection();
-			String sql = "INSERT INTO project_exhibition_3(peno, poster, title, title2, kind, period, loc, loc2, area, area2, item, host, url, price, time, hashtag, content) "
-					+ "VALUES(pe_peno_seq_3.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO god_exhibition_3(geno, poster, title, title2, kind, period, loc, loc2, area, area2, item, host, url, price, time, hashtag, content) "
+					+ "VALUES(ge_geno_seq_3.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, vo.getPoster());
 			ps.setString(2, vo.getTitle());
