@@ -46,7 +46,7 @@ public class FoodDAO {
 		   conn = CreateConnnection.getConnection();
 		   String sql = "SELECT fno, name, poster, num "
 		   			+ "FROM (SELECT fno, name, poster, rownum as num "
-		   			+ "FROM (SELECT SELECT fno, name, poster "
+		   			+ "FROM (SELECT fno, name, poster "
 		   			+ "FROM food_location "
 		   			+ "WHERE address LIKE '%'||?||'%')) "
 		   			+ "WHERE num BETWEEN ? AND ?";
@@ -85,7 +85,7 @@ public class FoodDAO {
 	   try {
 		   conn = CreateConnnection.getConnection();
 		   String sql = "SELECT CEIL(COUNT(*)/20.0) FROM food_location "
-		   				+ "WEHRE address LIKE '%'||?||'%'";
+		   				+ "WHERE address LIKE '%'||?||'%'";
 		   // 최근방식 WHERE REGEXP_LIKE(address, ?);
 		   ps = conn.prepareStatement(sql);
 		   ps.setString(1, ss);

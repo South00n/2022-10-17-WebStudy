@@ -25,8 +25,34 @@ import com.sist.dao.*;
 public class FoodModel {
 	@RequestMapping("food/food_location.do")
 	public String food_location(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			// 검색이라 한글이 넘어왔을거야 한글 변환 필요
+			request.setCharacterEncoding("UTF-8");
+		} catch (Exception e) {}
+		
+		String ss = request.getParameter("ss");
+		if(ss == null) {
+			ss = "역삼";
+		}
+		String page = request.getParameter("page");
+		if(page == null) {
+			page = "1";
+		}
+		
+		// 현재페이지 지정
+		int curpage = Integer.parseInt(page);
+		// DAO에서 해당 페이지의 데이터 읽기
+		FoodDAO dao = new FoodDAO();
+		ArrayList<FoodVO> list = dao.foodLocationFindData(curpage, ss);
+		int totalpage = dao.foodLoactionTotalPage(ss);
+		
+		request.setAttribute("list", list);
+		request.setAttribute("curpage", curpage);
+		request.setAttribute("totalpage", totalpage);
+		request.setAttribute("ss", ss);
+		
 		request.setAttribute("main_jsp", "../food/food_location.jsp");
-		return "../main/main.jsp";
+		return "../main/main.jsp"; // 메인에서 include
 	}
 	
 	@RequestMapping("food/food_list.do")

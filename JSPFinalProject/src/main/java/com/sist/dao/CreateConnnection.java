@@ -28,6 +28,7 @@ public class CreateConnnection {
 }*/
 
 package com.sist.dao;
+
 import java.util.*;
 import java.sql.*;
 import javax.naming.*;
@@ -51,6 +52,6 @@ public class CreateConnnection {
       {
          if(ps!=null) ps.close();
          if(conn!=null) conn.close();
-      }catch(Exception ex) {}
+      } catch(Exception ex) {}
    }
 }
