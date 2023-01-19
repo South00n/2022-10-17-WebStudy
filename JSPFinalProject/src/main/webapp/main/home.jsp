@@ -52,7 +52,7 @@
         <c:if test="${s.index >= 0 && s.index < 12 }">
 	        <li>
 	          <figure><img class="radius-10 btmspace-10" src="${vo.poster }" alt="${vo.subject }">
-	            <figcaption><a href="#">${vo.title }</a></figcaption>
+	            <figcaption><a href="../food/food_list.do?cno=${vo.cno }">${vo.title }</a></figcaption>
 	          </figure>
 	        </li>
          </c:if>
@@ -66,11 +66,11 @@
          <c:if test="${s.index >= 12 && s.index < 18 }">
 	        <li>
 	          <figure><img class="radius-10 btmspace-10" src="${vo.poster }" alt="${vo.subject }">
-	            <figcaption><a href="#">${vo.title }</a></figcaption>
+	            <figcaption><a href="../food/food_list.do?cno=${vo.cno }">${vo.title }</a></figcaption>
 	          </figure>
 	        </li>
          </c:if>
-       </c:forEach>
+        </c:forEach>
       </ul>
     </div>
     <h2 class="sectiontitle">메뉴별 인기 맛집</h2>
@@ -80,11 +80,11 @@
          <c:if test="${s.index >= 18 && s.index < 30 }">
 	        <li>
 	          <figure><img class="radius-10 btmspace-10" src="${vo.poster }" alt="${vo.subject }">
-	            <figcaption><a href="#">${vo.title }</a></figcaption>
+	            <figcaption><a href="../food/food_list.do?cno=${vo.cno }">${vo.title }</a></figcaption>
 	          </figure>
 	        </li>
          </c:if>
-       </c:forEach>
+        </c:forEach>
       </ul>
     </div>
     <h2 class="">최근 방문 맛집</h2>

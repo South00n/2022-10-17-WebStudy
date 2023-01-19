@@ -28,4 +28,43 @@ public class FoodModel {
 		request.setAttribute("main_jsp", "../food/food_location.jsp");
 		return "../main/main.jsp";
 	}
+	
+	@RequestMapping("food/food_list.do")
+	public String food_list(HttpServletRequest request, HttpServletResponse response) {
+		// ../food/food_list.do?cno=10
+		// 1. 요청값을 받는다
+		String cno = request.getParameter("cno");
+		// 데이터베이스에서 값을 읽어 온다
+		FoodDAO dao = new FoodDAO();
+		// 결과값을 얻어서 => request에 담아준다 ==> rd.forward(request, response) => rd(jsp)
+		ArrayList<FoodVO> list = dao.foodListData(Integer.parseInt(cno));
+		request.setAttribute("list", list);
+		CategoryVO vo = dao.categoryInfoData(Integer.parseInt(cno));
+		request.setAttribute("vo", vo);
+		// include하는 파일 전송
+		request.setAttribute("main_jsp", "../food/food_list.jsp");
+		return "../main/main.jsp";
+	}
+	
+	@RequestMapping("food/food_detail.do")
+	public String food_detail(HttpServletRequest request, HttpServletResponse response) {
+		// food_list.jsp에서 보내준 fno값을 받는다 
+		String fno = request.getParameter("fno");
+		// 데이터베이스 연결
+		FoodDAO dao = new FoodDAO();
+		FoodVO vo = dao.food_detail(Integer.parseInt(fno));
+		String address = vo.getAddress();
+		// 경기도 파주시 광탄면 소령원길 92 지번 경기도 파주시 광탄면 영장리 261-2
+		String addr1 = address.substring(0,address.lastIndexOf("지"));
+		addr1 = addr1.trim();
+		String addr2 = address.substring(address.lastIndexOf("지") + 3);
+		request.setAttribute("vo", vo);
+		request.setAttribute("addr1", addr1);
+		request.setAttribute("addr2", addr2);
+		// => 레시피, 재료, Goods, 인근 명소
+		// 화면 출력
+		request.setAttribute("main_jsp", "../food/food_detail.jsp");
+		return "../main/main.jsp";
+	}
+	
 }
