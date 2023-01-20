@@ -103,6 +103,40 @@ public class FreeBoardDAO {
 	}
 
 	// 상세보기
+	public FreeBoardVO boardDetailData(int no) {
+		FreeBoardVO vo = new FreeBoardVO();
+		try {
+			conn = CreateConnnection.getConnection();
+			// 조회수 증가
+			String sql = "UPDATE project_freeboard SET "
+					+ "hit = hit + 1 "
+					+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no);
+			ps.executeUpdate();
+			///////////////////////////////////// 조회수 증가
+			// 실제 게시물번호에 해당되는 데이터를 가지고 온다 * => DataBase에 출력 순서로 읽는다
+			sql = "SELECT no, name, subject, content, TO_CHAR(regdate, 'YYYY-MM-DD'), hit "
+				+ "FROM project_freeboard "
+				+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no); // IN OUT
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			vo.setNo(rs.getInt(1));
+			vo.setName(rs.getString(2));
+			vo.setSubject(rs.getString(3));
+			vo.setContent(rs.getString(4));
+			vo.setDbday(rs.getString(5));
+			vo.setHit(rs.getInt(6));
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CreateConnnection.disConnection(conn, ps);
+		}
+		return vo;
+	}
 	// 수정
 	// 삭제
 	// 검색 => 다중 검색

@@ -97,7 +97,14 @@ public class FreeBoardModel {
 	
 	@RequestMapping("freeboard/detail.do")
 	public String freeboard_detail(HttpServletRequest request, HttpServletResponse response) {
-		
+		// 출력에 필요한 데이터 전송
+		// 사용자 요청한 데이터를 받아서 처리 => 게시물 번호
+		String no = request.getParameter("no"); // 상세보기 => 1개만 출력
+		// DAO로 전송 => 오라클에서 데이터 읽기
+		FreeBoardDAO dao = new FreeBoardDAO();
+		FreeBoardVO vo = dao.boardDetailData(Integer.parseInt(no));
+		request.setAttribute("vo", vo);
+		request.setAttribute("main_jsp", "../freeboard/detail.jsp"); // 클릭시마다 데이터가 틀린 경우
 		return "../main/main.jsp";
 	}
 }
