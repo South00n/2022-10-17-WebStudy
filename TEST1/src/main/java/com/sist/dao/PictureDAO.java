@@ -8,7 +8,7 @@ public class PictureDAO {
 	
 	private Connection conn;
 	private PreparedStatement ps;
-	private final String url = "jdbc:oracle:thin:@211.63.89.131:1521:XE";
+	private final String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	
 	public PictureDAO() {
 		try {
@@ -32,13 +32,17 @@ public class PictureDAO {
 	public void pictureDetailInsert(PictureVO vo) {
 		try {
 			getConnection();
-			String sql = "INSERT INTO god_picture_3(gpno, image, title, name, content) "
-					+ "VALUES(gp_gpno_seq_3.nextval, ?, ?, ?, ?)";
+			String sql = "INSERT INTO god_picture_3(gpno, image, title, name, content, content2, info, code, image2) "
+					+ "VALUES(gp_gpno_seq_3.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, vo.getImage());
 			ps.setString(2, vo.getTitle());
 			ps.setString(3, vo.getName());
 			ps.setString(4, vo.getContent());
+			ps.setString(5, vo.getContent2());
+			ps.setString(6, vo.getInfo());
+			ps.setString(7, vo.getCode());
+			ps.setString(8, vo.getImage2());
 			ps.executeUpdate();
 			
 		} catch (Exception e) {

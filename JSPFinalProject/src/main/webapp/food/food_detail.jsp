@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="wrapper row3">
-  <div id="breadcrumb" class="clear"> 
+  <div id="breadcrumb" class="clear">
     <ul>
       <li><a href="#">Home</a></li>
       <li><a href="#">Lorem</a></li>

@@ -18,8 +18,8 @@ public class DataCollectionService {
 
    public static void main(String[] args) {
       DataCollectionService ds = new DataCollectionService();
-      //ds.pictureGetData();
-      ds.exhibitionGetData();
+      ds.pictureGetData();
+      //ds.exhibitionGetData();
    }
    
    public void pictureGetData() {
@@ -27,7 +27,7 @@ public class DataCollectionService {
 	  PictureDAO dao = new PictureDAO(); 
       try {
     	 
-         for(int i = 1; i < 50; i++) {
+         for(int i = 15; i < 30; i++) {
             Document doc = Jsoup.connect("https://www.opengallery.co.kr/discover/?p= " + i+ " &f_ts=&f_ss=&f_os=&f_ps=&f_ra=false&f_pa=false&r_ex=0&").get();
             Elements link = doc.select("div#discoverList a.discoverCard-a");
             
@@ -42,26 +42,42 @@ public class DataCollectionService {
                Elements pic = doc2.select("img.artwork-detail-image-carousel-image");
                Element title = doc2.selectFirst("h2.artwork-detail-info-title");               
                Element name = doc2.selectFirst("a.artwork-detail-info-artist-link");
-               Elements content1 = doc2.select("div.artwork-detail-left-section p");
+               Elements info = doc2.select("div.artwork-detail-info-row-right");               
+               Elements content = doc2.select("div.artwork-detail-notes-body p");
                
-               
-               String s2 = content1.get(0).text();
-               
-               if(s2.equals("첫 렌탈이라면 무조건 33,000원!")) {
-                  s2 = content1.get(1).text();
+               String s2 = "";
+               for(int k=0; k<pic.size(); k++) {
+            	   
+            	   s2 = s2 + pic.get(k).attr("src") + "^";
                }
-               System.out.println(pic.get(0).attr("src"));                  
+               /*
+               String s3 = content1.get(0).text();
+               
+               if(s3.equals("첫 렌탈이라면 무조건 33,000원!")) {
+                  s3 = content1.get(1).text();
+               }
+               */
+               System.out.println(pic.get(0).attr("src"));
+               System.out.println(s2);
                System.out.println(title.text());
                System.out.println(name.text());
-               System.out.println(s2);
+               System.out.println(info.get(1).text());
+               System.out.println(info.get(2).text());
+               //System.out.println(s3);
+               System.out.println(content.get(0).text());
+               System.out.println(content.get(1).text());
                System.out.println(cnt++);
                System.out.println();
                
                PictureVO vo = new PictureVO();            
                vo.setImage(pic.get(0).attr("src"));
+               vo.setImage2(s2);
                vo.setTitle(title.text());
                vo.setName(name.text());
-               vo.setContent(s2);
+               vo.setInfo(info.get(1).text());
+               vo.setCode(info.get(2).text());
+               vo.setContent(content.get(0).text());
+               vo.setContent2(content.get(1).text());
                dao.pictureDetailInsert(vo);
                
             }
@@ -100,8 +116,8 @@ public class DataCollectionService {
 		   Document doc = Jsoup.connect("https://www.showala.com/ex/ex_list.php").get();
 		   Elements src = doc.select("a.menu_dep3_link");
 		   
-		   for(int i =987; i < src.size(); i++) {
-			   if(i == 107 || i == 479 || i == 614 || i == 988 ) continue; // 오류나는부분 스킵
+		   for(int i =1; i < src.size(); i++) {
+			   //if(i == 107 || i == 479 || i == 614 || i == 988 ) continue; // 오류나는부분 스킵
 			   ExhibitionVO vo = new ExhibitionVO();
 			   StringTokenizer st = new StringTokenizer("https://www.showala.com" + src.get(i).attr("href"));
 			   //String s = "https://www.showala.com" + src.get(i).attr("href");
@@ -123,8 +139,8 @@ public class DataCollectionService {
 			   bw.write(kind.text()+"\n");
 			   vo.setKind(kind.text());
 			   //System.out.println(kind.text());
-			   Element period = doc2.selectFirst("p.des");
-			   bw.write(period.text()+"\n");
+			   Element period = doc2.selectFirst("li.clearfix p.des");
+			   bw.write(period.text() + "\n");
 			   vo.setPeriod(period.text());
 			   //System.out.println(period.text());
 			   Element url = doc2.selectFirst("a.icn_home");
@@ -142,7 +158,7 @@ public class DataCollectionService {
 					   loc = a.text();					   
 				   } else if (label.equals("사전등록기간")) {
 					   continue;
-				   } else if (label.equals("세부장소")) {
+				   }  else if (label.equals("세부장소")) {
 					   Element a = doc2.select("p.dimish").get(1);
 					   loc2 = a.text();
 				   } else if (label.equals("산업분야")) {
@@ -159,6 +175,7 @@ public class DataCollectionService {
 					   host = a.text();
 				   }
 			   }
+			   
 			   bw.write(loc + "\n");
 			   bw.write(loc2 + "\n");
 			   bw.write(area + "\n");
@@ -191,7 +208,7 @@ public class DataCollectionService {
 			   bw.write(i + "\n");
 			   bw.flush();			   
 			   bw.newLine();
-			   dao.ExhibitionDetailInsert(vo);
+			   //dao.ExhibitionDetailInsert(vo);
 		   }
 		   
 	   } catch (Exception e) {}
