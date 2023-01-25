@@ -8,7 +8,7 @@ public class PictureDAO {
 	
 	private Connection conn;
 	private PreparedStatement ps;
-	private final String url = "jdbc:oracle:thin:@localhost:1521:XE";
+	private final String url = "jdbc:oracle:thin:@211.63.89.131:1521:XE";
 	
 	public PictureDAO() {
 		try {

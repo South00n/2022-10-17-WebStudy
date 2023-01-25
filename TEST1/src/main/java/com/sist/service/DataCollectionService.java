@@ -18,8 +18,8 @@ public class DataCollectionService {
 
    public static void main(String[] args) {
       DataCollectionService ds = new DataCollectionService();
-      ds.pictureGetData();
-      //ds.exhibitionGetData();
+      //ds.pictureGetData();
+      ds.exhibitionGetData();
    }
    
    public void pictureGetData() {
@@ -27,7 +27,7 @@ public class DataCollectionService {
 	  PictureDAO dao = new PictureDAO(); 
       try {
     	 
-         for(int i = 15; i < 30; i++) {
+         for(int i = 20; i < 50; i++) {
             Document doc = Jsoup.connect("https://www.opengallery.co.kr/discover/?p= " + i+ " &f_ts=&f_ss=&f_os=&f_ps=&f_ra=false&f_pa=false&r_ex=0&").get();
             Elements link = doc.select("div#discoverList a.discoverCard-a");
             
@@ -116,7 +116,7 @@ public class DataCollectionService {
 		   Document doc = Jsoup.connect("https://www.showala.com/ex/ex_list.php").get();
 		   Elements src = doc.select("a.menu_dep3_link");
 		   
-		   for(int i =1; i < src.size(); i++) {
+		   for(int i =111; i < src.size(); i++) {
 			   //if(i == 107 || i == 479 || i == 614 || i == 988 ) continue; // 오류나는부분 스킵
 			   ExhibitionVO vo = new ExhibitionVO();
 			   StringTokenizer st = new StringTokenizer("https://www.showala.com" + src.get(i).attr("href"));
@@ -208,7 +208,7 @@ public class DataCollectionService {
 			   bw.write(i + "\n");
 			   bw.flush();			   
 			   bw.newLine();
-			   //dao.ExhibitionDetailInsert(vo);
+			   dao.ExhibitionDetailInsert(vo);
 		   }
 		   
 	   } catch (Exception e) {}
