@@ -59,6 +59,7 @@ public class FreeBoardModel {
 		//////////////////////////////////////////////////////// JSP 출력을 위해 전송하는 데이터
 		
 		request.setAttribute("main_jsp", "../freeboard/list.jsp"); // 파일이 들어가는 위치, 넣을 파일
+		CommonsModel.footerData(request);
 		return "../main/main.jsp"; 
 	}
 	
@@ -67,6 +68,7 @@ public class FreeBoardModel {
 		
 		// 중간에 들어가는 파일을 지정
 		request.setAttribute("main_jsp", "../freeboard/insert.jsp"); // 화면 보여주기
+		CommonsModel.footerData(request);
 		return "../main/main.jsp";
 	
 	}
@@ -91,6 +93,7 @@ public class FreeBoardModel {
 		vo.setPwd(pwd);
 		FreeBoardDAO dao=new FreeBoardDAO();
 		dao.boardInsert(vo);
+		
 		// 화면 이동
 		return "redirect:list.do"; // sendRedirect("../freeboard/list.do")
 	}
@@ -105,6 +108,7 @@ public class FreeBoardModel {
 		FreeBoardVO vo = dao.boardDetailData(Integer.parseInt(no));
 		request.setAttribute("vo", vo);
 		request.setAttribute("main_jsp", "../freeboard/detail.jsp"); // 클릭시마다 데이터가 틀린 경우
+		CommonsModel.footerData(request);
 		return "../main/main.jsp";
 	}
 }

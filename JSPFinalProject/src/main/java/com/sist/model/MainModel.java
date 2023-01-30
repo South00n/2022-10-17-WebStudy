@@ -14,6 +14,7 @@ import com.sist.vo.*;
 
 @Controller
 public class MainModel {
+	
 	@RequestMapping("main/main.do")
 	public String main_page(HttpServletRequest request, HttpServletResponse response) {
 		/*HttpSession session = request.getSession();
@@ -22,8 +23,12 @@ public class MainModel {
 		FoodDAO dao = new FoodDAO();
 		ArrayList<CategoryVO> list = dao.foodCategoryData(); 
 		request.setAttribute("list", list); // home.jsp
+		
+		
+		CommonsModel.footerData(request);
 		// include할 파일명을 전송
 		request.setAttribute("main_jsp", "../main/home.jsp"); // main.jsp
 		return "../main/main.jsp";
 	}
+	
 }

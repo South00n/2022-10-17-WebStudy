@@ -6,6 +6,9 @@
 <title>맛집 & 여행</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="../shadow/css/shadowbox.css">
+<script type="text/javascript" src="../shadow/js/shadowbox.js"></script>
+
 <link href="../css/layout.css" rel="stylesheet" type="text/css" media="all">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8691c9adbceec37fa95f10418713459a&libraries=services"></script>
 </head>
