@@ -10,7 +10,6 @@ import com.sist.dao.MemberDAO;
 import com.sist.vo.MemberVO;
 import com.sist.vo.ZipcodeVO;
 
-import oracle.net.ns.SessionAtts;
 
 import java.util.*;
 

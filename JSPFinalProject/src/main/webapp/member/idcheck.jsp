@@ -18,6 +18,7 @@
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
+
 $(function(){
 	$('#okBtn').hide();
 	$('#idBtn').on('click', function(){
