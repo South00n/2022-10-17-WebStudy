@@ -27,7 +27,11 @@ public class DataCollectionService {
 	  PictureDAO dao = new PictureDAO(); 
       try {
     	 
+<<<<<<< HEAD
          for(int i = 1; i < 50; i++) {
+=======
+         for(int i = 20; i < 50; i++) {
+>>>>>>> branch 'master' of https://github.com/South00n/2022-10-17-WebStudy.git
             Document doc = Jsoup.connect("https://www.opengallery.co.kr/discover/?p= " + i+ " &f_ts=&f_ss=&f_os=&f_ps=&f_ra=false&f_pa=false&r_ex=0&").get();
             Elements link = doc.select("div#discoverList a.discoverCard-a");
             
@@ -117,8 +121,13 @@ public class DataCollectionService {
 		   Document doc = Jsoup.connect("https://www.showala.com/ex/ex_list.php").get();
 		   Elements src = doc.select("a.menu_dep3_link");
 		   
+<<<<<<< HEAD
 		   for(int i =948; i < src.size(); i++) {
 			   //if(i == 109 || i == 479 || i == 614 || i == 988 ) continue; // 오류나는부분 스킵
+=======
+		   for(int i =111; i < src.size(); i++) {
+			   //if(i == 107 || i == 479 || i == 614 || i == 988 ) continue; // 오류나는부분 스킵
+>>>>>>> branch 'master' of https://github.com/South00n/2022-10-17-WebStudy.git
 			   ExhibitionVO vo = new ExhibitionVO();
 			   StringTokenizer st = new StringTokenizer("https://www.showala.com" + src.get(i).attr("href"));
 			   //String s = "https://www.showala.com" + src.get(i).attr("href");
