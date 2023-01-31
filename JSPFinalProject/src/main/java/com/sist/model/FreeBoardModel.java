@@ -210,6 +210,74 @@ public class FreeBoardModel {
 		dao.replyInsert(vo);
 		return "redirect:detail.do?no="+bno;
 	}
+	
+	@RequestMapping("freeboard/reply_update.do")
+	public String reply_update(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (Exception e) {}
+		String bno = request.getParameter("bno");
+		String rno = request.getParameter("rno");
+		String msg = request.getParameter("msg");
+		// DAO연결
+		FreeBoardDAO dao = new FreeBoardDAO();
+		dao.replyUpdate(Integer.parseInt(rno), msg);
+		return "redirect:detail.do?no="+bno;
+	}
+	
+	/*
+	RNO        NOT NULL NUMBER        ==> 자동 증가
+	BNO                 NUMBER        ==> 전송
+	=============================================
+	ID                  VARCHAR2(20) 
+	NAME       NOT NULL VARCHAR2(34) 
+	============================================= session
+	MSG        NOT NULL CLOB          ==> 전송
+	REGDATE             DATE          ==> SYSDATE
+	GROUP_ID   NOT NULL NUMBER        ==> SubQuery
+	=============================================
+	GROUP_STEP          NUMBER       
+	GROUP_TAB           NUMBER       
+	ROOT                NUMBER       
+	DEPTH               NUMBER
+	============================================= 0
+*/
+	
+	@RequestMapping("freeboard/reply_reply_insert.do")
+	public String reply_reply_insert(HttpServletRequest request, HttpServletResponse response) {
+		
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (Exception e) {}
+		String bno = request.getParameter("bno");
+		String pno = request.getParameter("pno"); // 댓글 번호 => 상위번호
+		String msg = request.getParameter("msg");
+		
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		String name = (String)session.getAttribute("name");
+		
+		BoardReplyVO vo = new BoardReplyVO();
+		vo.setBno(Integer.parseInt(bno));
+		vo.setId(id);
+		vo.setName(name);
+		vo.setMsg(msg);
+		FreeBoardDAO dao = new FreeBoardDAO();
+		// 답변 => 메소드 호출
+		dao.replyReplyInsert(Integer.parseInt(pno), vo);
+		return "redirect:detail.do?no="+bno;
+	}
+	
+	@RequestMapping("freeboard/reply_delete.do")
+	public String reply_delete(HttpServletRequest request, HttpServletResponse response) {
+		String rno = request.getParameter("rno");
+		String bno = request.getParameter("bno");
+		FreeBoardDAO dao = new FreeBoardDAO();
+		// 삭제 처리
+		dao.replyDelete(Integer.parseInt(rno));
+		
+		return "redirect:detail.do?no="+bno;
+	}
 }
 
 

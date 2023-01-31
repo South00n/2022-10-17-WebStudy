@@ -58,10 +58,27 @@
 			let no = $(this).attr("data-no");
 			if(u === 0) {
 				$('#u' + no).show();
-				i = 1;
+				$(this).text("취소")
+				u = 1;
 			} else {
 				$('#u' + no).hide();
-				i = 0;
+				$(this).text("수정")
+				u = 0;
+			}
+		})
+		
+		$('.replys').click(function(){
+			$('.rinsert').hide();
+			$('.rupdate').hide();
+			let no = $(this).attr("data-no");
+			if(r == 0) {
+				$('#r'+no).show();
+				$(this).text("취소")
+				r=1;
+			} else {
+				$('#r'+no).hide();
+				$(this).text("댓글")
+				r=0;
 			}
 		})
 	})
@@ -147,16 +164,16 @@
 											 	<c:forEach var="i" begin="1" end="${rvo.group_tab }">
 											 		&nbsp;&nbsp;
 											 	</c:forEach>
-											 	<img src="re_icon.png">
+											 	<img src="image/re_icon.png">
 											 </c:if>
 											◑<span style="color:orange">${rvo.name }</span>&nbsp;(${rvo.dbday })</td>
 											<td class="text-right">
 												<c:if test="${sessionScope.id != null }">
 													<c:if test="${sessionScope.id == rvo.id }">
 														<span class="btn btn-xs btn-success ups" data-no="${rvo.rno }">수정</span>
-														<a href="#" class="btn btn-xs btn-info">삭제</a>
+														<a href="../freeboard/reply_delete.do?rno=${rvo.rno }&bno=${vo.no}" class="btn btn-xs btn-info">삭제</a>
 													</c:if>
-													<a href="#" class="btn btn-xs btn-warning">댓글</a>
+													<span class="btn btn-xs btn-warning replys" data-no=${rvo.rno }>댓글</span>
 												</c:if>
 											</td>
 										</tr>
@@ -165,7 +182,8 @@
 												<pre style="white-space: pre-wrap; background-color: white; border: none">${rvo.msg }</pre>
 											</td>
 										</tr>
-										<tr id="i${rvo.rno }" class="rinsert" style="display:none">
+										<%-- 대댓글 --%>
+										<tr id="r${rvo.rno }" class="rinsert" style="display:none">
 											<td colspan="2">
 												<form method="post" action="../freeboard/reply_reply_insert.do">
 													<input type=hidden name="bno" value="${vo.no }">
@@ -175,6 +193,7 @@
 												</form>
 											</td>
 										</tr>
+										<%-- 수정 --%>
 										<tr id="u${rvo.rno }" class="rupdate" style="display:none">
 											<td colspan="2">
 												<form method="post" action="../freeboard/reply_update.do">
