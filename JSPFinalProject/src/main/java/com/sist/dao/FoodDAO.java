@@ -215,30 +215,39 @@ public class FoodDAO {
 	   return vo;
    }
    
-   // 관련 레시피 출력
-   public List<RecipeVO> food_recipe_data(String type) {
-	   List<RecipeVO> list = new ArrayList<RecipeVO>();
-	   try {
-		   conn = CreateConnnection.getConnection();
-		   String sql = "SELECT title, poster, chef, rownum "
-		   			+ "FROM recipe "
-		   			+ "WHERE REGEXP_LIKE(title, ?) AND rownum <= 5";
-		   ps = conn.prepareStatement(sql);
+// 관련 레시피 출력 
+   public List<RecipeVO> food_recipe_data(String type)
+   {
+	   List<RecipeVO> list=new ArrayList<RecipeVO>();
+	   try
+	   {
+		   conn=CreateConnnection.getConnection();
+		   String sql="SELECT title,poster,chef,rownum "
+				     +"FROM recipe "
+				     +"WHERE REGEXP_LIKE(title,?) AND rownum<=5";
+		   ps=conn.prepareStatement(sql);
 		   ps.setString(1, type);
-		   ResultSet rs = ps.executeQuery();
-		   while(rs.next()) {
-			   
+		   ResultSet rs=ps.executeQuery();
+		   while(rs.next())
+		   {
+			   RecipeVO vo=new RecipeVO();
+			   vo.setTitle(rs.getString(1));
+			   vo.setPoster(rs.getString(2));
+			   vo.setChef(rs.getString(3));
+			   list.add(vo);
 		   }
 		   rs.close();
-	   } catch (Exception e) {
-		   e.printStackTrace();
-	   } finally {
-		 CreateConnnection.disConnection(conn, ps);  
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
 	   }
-	   
-	   
+	   finally
+	   {
+		   CreateConnnection.disConnection(conn, ps);
+	   }
 	   return list;
    }
+   
 }
 
 

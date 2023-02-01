@@ -75,31 +75,46 @@ public class FoodModel {
 	}
 	
 	@RequestMapping("food/food_detail.do")
-	public String food_detail(HttpServletRequest request, HttpServletResponse response) {
-		// food_list.jsp에서 보내준 fno값을 받는다 
-		String fno = request.getParameter("fno");
-		// 데이터베이스 연결
-		FoodDAO dao = new FoodDAO();
-		FoodVO vo = dao.food_detail(Integer.parseInt(fno));
-		String address = vo.getAddress();
-		// 경기도 파주시 광탄면 소령원길 92 지번 경기도 파주시 광탄면 영장리 261-2
-		String addr1 = address.substring(0,address.lastIndexOf("지"));
-		addr1 = addr1.trim();
-		String addr2 = address.substring(address.lastIndexOf("지") + 3);
-		request.setAttribute("vo", vo);
-		request.setAttribute("addr1", addr1);
-		request.setAttribute("addr2", addr2);
-		// => 레시피, 재료, Goods, 인근 명소
-		// 화면 출력
-		request.setAttribute("main_jsp", "../food/food_detail.jsp");
-		
-		AllReplyDAO adao = new AllReplyDAO();
-		List<AllReplyVO> rList = adao.allReplyListData(Integer.parseInt(fno), 2);
-		request.setAttribute("rList", rList);
-		request.setAttribute("count", rList.size());
-		
-		CommonsModel.footerData(request);
-		return "../main/main.jsp";
+	   public String food_detail(HttpServletRequest request,HttpServletResponse response)
+	   {
+		   //../food/food_detail.do?fno=1
+		   String fno=request.getParameter("fno");
+		   // 데이터베이스 연결 
+		   FoodDAO dao=new FoodDAO();
+		   FoodVO vo=dao.food_detail(Integer.parseInt(fno));
+		   String address=vo.getAddress();
+		   // 경기도 파주시 교하로681번길 12 지번 경기도 파주시 동패동 1096-4
+		   String addr1=address.substring(0,address.lastIndexOf("지"));//경기도 파주시 교하로681번길 12
+		   addr1=addr1.trim();
+		   String addr2=address.substring(address.lastIndexOf("지")+3);//경기도 파주시 동패동 1096-4
+		   request.setAttribute("vo", vo);
+		   request.setAttribute("addr1", addr1);
+		   request.setAttribute("addr2", addr2);
+		   // => 레시피 , 재료 , Goods , 인근 명소 
+		   // 화면 출력 
+		   request.setAttribute("main_jsp", "../food/food_detail.jsp");
+		   AllReplyDAO adao=new AllReplyDAO();
+		   List<AllReplyVO> rList=adao.allReplyListData(Integer.parseInt(fno), 2);
+		   request.setAttribute("rList", rList);
+		   request.setAttribute("count", rList.size());
+		   CommonsModel.footerData(request);
+		   // 한식 / 고기  ==> 한식|고기 
+		   String type=vo.getType();
+		   int index=type.indexOf('/');
+		   if(index>-1)
+		   {
+			   type=type.replace('/','|');
+		   }
+		   List<RecipeVO> nList=dao.food_recipe_data(type);
+		   request.setAttribute("nList", nList);
+		   
+		   return "../main/main.jsp";
+	   }
 	}
-	
-}
+
+
+
+
+
+
+

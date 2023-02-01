@@ -9,19 +9,22 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
-let u = 0;
+let u=0;
 $(function(){
 	$('.ups').click(function(){
 		$('.rupdate').hide();
-		let rno = $(this).attr("data-no");
-		if(u == 0) {
+		let rno=$(this).attr("data-no");
+		if(u==0)
+		{
 			$(this).text("취소");
 			$('#u'+rno).show();
-			u = 1;
-		} else {
+			u=1;
+		}
+		else
+		{
 			$(this).text("수정");
 			$('#u'+rno).hide();
-			u = 0;
+			u=0;
 		}
 	})
 })
@@ -29,13 +32,15 @@ $(function(){
 </head>
 <body>
 <div class="wrapper row3">
-  <div id="breadcrumb" class="clear">
+  <div id="breadcrumb" class="clear"> 
+    <!-- ################################################################################################ -->
     <ul>
       <li><a href="#">Home</a></li>
       <li><a href="#">Lorem</a></li>
       <li><a href="#">Ipsum</a></li>
       <li><a href="#">Dolor</a></li>
     </ul>
+    <!-- ################################################################################################ --> 
   </div>
 </div>
 
@@ -59,46 +64,46 @@ $(function(){
             <td colspan="2"><h4>${vo.name }&nbsp;<span style="color:orange">${vo.score }</span></h4></td>
           </tr>
           <tr>
-            <th width="20%" style="color:lightgray">주소</th>
+            <th width=20% style="color:gray">주소</th>
             <td width="80%">${addr1 }<br>
-              <sub style="color:gray">지번:${addr2 }</sub>
+             <sub style="color:gray">지번:${addr2 }</sub>
             </td>
           </tr>
           <tr>
-            <th width="20%" style="color:lightgray">전화번호</th>
+            <th width=20% style="color:gray">전화번호</th>
             <td width="80%">${vo.tel }</td>
           </tr>
           <tr>
-            <th width="20%" style="color:lightgray">음식종류</th>
+            <th width=20% style="color:gray">음식종류</th>
             <td width="80%">${vo.type }</td>
           </tr>
           <tr>
-            <th width="20%" style="color:lightgray">가격대</th>
+            <th width=20% style="color:gray">가격대</th>
             <td width="80%">${vo.price }</td>
           </tr>
           <tr>
-            <th width="20%" style="color:lightgray">주차</th>
+            <th width=20% style="color:gray">주차</th>
             <td width="80%">${vo.parking }</td>
           </tr>
           <tr>
-            <th width="20%" style="color:lightgray">영업시간</th>
+            <th width=20% style="color:gray">영업시간</th>
             <td width="80%">${vo.time }</td>
           </tr>
-          <c:if test="${vo.menu != 'no' }">
-          <tr>
-            <th width="20%" style="color:lightgray">메뉴</th>
-            <td width="80%">
-              <ul style="padding-left: 5px">
-                <c:forTokens items="${vo.menu }" delims="원" var="m">
-                  <li style="list-style:none">${m }원</li>
-                </c:forTokens>
-              </ul>
-            </td>
-          </tr>
+          <c:if test="${vo.menu!='no' }">
+	          <tr>
+	            <th width=20% style="color:gray">메뉴</th>
+	            <td width="80%">
+	              <ul>
+	                <c:forTokens items="${vo.menu }" delims="원" var="m">
+	                  <li>${m }원</li>
+	                </c:forTokens>
+	              </ul>
+	            </td>
+	          </tr>
           </c:if>
           <tr>
             <td colspan="2" class="text-right">
-             <c:if test="${sessionScope.id != null }">
+             <c:if test="${sessionScope.id!=null }">
               <a href="#" class="btn btn-xs btn-info">좋아요(0)</a>
               <a href="#" class="btn btn-xs btn-success">찜하기</a>
               <a href="#" class="btn btn-xs btn-warning">예약하기</a>
@@ -138,16 +143,16 @@ $(function(){
 	             <td colspan="2"><pre style="white-space:pre-wrap;background-color: white;border:none ">${rvo.msg }</pre></td>
 	           </tr>
 	           <tr id="u${rvo.rno }" class="rupdate" style="display:none">
-					<td colspan="2">
-						<form method="post" action="../all_reply/all_reply_update.do">
-							<input type=hidden name="no" value="${vo.fno }">
-							<input type=hidden name="rno" value="${rvo.rno }">
-							<input type=hidden name="cate_no" value="2">
-							<textarea rows="3" cols="75" name="msg" style="float: left">${rvo.msg }</textarea>&nbsp;
-							<input type="submit" value="수정" class="btn btn-sm btn-danger" style="height: 65px">
-						</form>
-					</td>
-				</tr>
+	             <td colspan="2">
+	               <form method="post" action="../all_reply/all_reply_update.do">
+			         <input type=hidden name="no" value="${vo.fno }">
+			         <input type=hidden name="rno" value="${rvo.rno }">
+			         <input type=hidden name="cate_no" value="2">
+			         <textarea rows="3" cols="90" name="msg" style="float: left">${rvo.msg}</textarea>&nbsp;
+			         <input type=submit value="수정" class="btn btn-sm btn-danger" style="height: 65px">
+			        </form>
+	             </td>
+	            </tr>
 	         </table>
 	       </c:forEach>
 	      </td>
@@ -176,11 +181,11 @@ $(function(){
 	  </c:if>
 	  </table>
     </div>
-    
+   
     <div class="sidebar one_quarter"> 
       <div class="sdb_holder">
+        <%-- 지도 --%>
         <div id="map" style="width:100%;height:350px;"></div>
-
 		<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = {
@@ -195,7 +200,7 @@ $(function(){
 		var geocoder = new kakao.maps.services.Geocoder();
 		
 		// 주소로 좌표를 검색합니다
-		geocoder.addressSearch('${addr1 }', function(result, status) {
+		geocoder.addressSearch('${addr1}', function(result, status) {
 		
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === kakao.maps.services.Status.OK) {
@@ -210,7 +215,7 @@ $(function(){
 		
 		        // 인포윈도우로 장소에 대한 설명을 표시합니다
 		        var infowindow = new kakao.maps.InfoWindow({
-		            content: '<div style="width:150px;text-align:center;padding:6px 0;">${vo.name }</div>'
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;">${vo.name}</div>'
 		        });
 		        infowindow.open(map, marker);
 		
@@ -221,13 +226,36 @@ $(function(){
 		</script>
       </div>
       <div class="sdb_holder">
-        <%-- 인근 명소 ... --%>
-      </div>
+        <%-- 관련 레시피 ... --%>
+        <h2 class="sectiontitle">관련 레시피</h2>
+        <table class="table">
+          <tr>
+           <td>
+             <c:forEach var="kvo" items="${nList }">
+               <table class="table">
+                 <tr>
+                   <td>
+                    <img src="${kvo.poster }" style="width: 100%">
+                   </td>
+                 </tr>
+                 <tr>
+                   <td>${kvo.title }</td>
+                 </tr>
+               </table>
+             </c:forEach>
+           </td>
+          </tr>
+        </table>
+      </div>  
     </div>
-    
+   
     <!-- / main body -->
     <div class="clear"></div>
   </main>
 </div>
 </body>
 </html>
+
+
+
+
