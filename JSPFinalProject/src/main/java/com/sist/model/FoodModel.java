@@ -92,6 +92,12 @@ public class FoodModel {
 		// => 레시피, 재료, Goods, 인근 명소
 		// 화면 출력
 		request.setAttribute("main_jsp", "../food/food_detail.jsp");
+		
+		AllReplyDAO adao = new AllReplyDAO();
+		List<AllReplyVO> rList = adao.allReplyListData(Integer.parseInt(fno), 2);
+		request.setAttribute("rList", rList);
+		request.setAttribute("count", rList.size());
+		
 		CommonsModel.footerData(request);
 		return "../main/main.jsp";
 	}
