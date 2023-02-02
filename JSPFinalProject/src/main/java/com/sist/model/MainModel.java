@@ -5,6 +5,7 @@ import com.sist.controller.RequestMapping;
 
 import java.util.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,6 +25,32 @@ public class MainModel {
 		ArrayList<CategoryVO> list = dao.foodCategoryData(); 
 		request.setAttribute("list", list); // home.jsp
 		
+		// cookie 전송
+		Cookie[] cookies = request.getCookies();
+		List<FoodVO> cList = new ArrayList<FoodVO>();
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		if (cookies!=null) {
+			if(id == null) {
+				for(int i = cookies.length-1; i>=0; i--) {
+					if(cookies[i].getName().startsWith("guest_food")) {
+						String fno = cookies[i].getValue();
+						FoodVO vo = dao.food_detail(Integer.parseInt(fno));
+						cList.add(vo);
+					}
+				}
+			} else {
+				for(int i = cookies.length-1; i>=0; i--) {
+					if(cookies[i].getName().startsWith(id+"_food")) {
+						String fno = cookies[i].getValue();
+						FoodVO vo = dao.food_detail(Integer.parseInt(fno));
+						cList.add(vo);
+					}
+				}
+			}
+		}
+		
+		request.setAttribute("cList", cList);
 		
 		CommonsModel.footerData(request);
 		// include할 파일명을 전송

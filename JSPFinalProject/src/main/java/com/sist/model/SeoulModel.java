@@ -7,6 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.w3c.dom.Document;
+
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.AllReplyDAO;
@@ -95,6 +100,21 @@ public class SeoulModel {
 		request.setAttribute("rList", rList);
 		request.setAttribute("count", rList.size());
 		
+		CommonsModel.footerData(request);
+		return "../main/main.jsp";
+	}
+	
+	@RequestMapping("seoul/seoul_weather.do")
+	public String seoul_weather(HttpServletRequest request, HttpServletResponse response) {
+		
+		String html = "";
+		try {
+			org.jsoup.nodes.Document doc = Jsoup.connect("https://korean.visitseoul.net/weather").get();
+			Element elem = doc.selectFirst("section.content");
+			html = elem.html();
+			
+		} catch (Exception e) {}
+		request.setAttribute("main_jsp", "../seoul/seoul_weather.jsp");
 		CommonsModel.footerData(request);
 		return "../main/main.jsp";
 	}

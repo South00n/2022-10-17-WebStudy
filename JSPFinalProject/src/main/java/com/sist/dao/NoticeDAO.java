@@ -47,42 +47,47 @@ public class NoticeDAO {
 	 * 
 	 */
 	// List, Detail => user / admin이 동일
-	public List<NoticeVO> noticeListData(int page) {
-		List<NoticeVO> list = new ArrayList<NoticeVO>();
-		try {
-			conn = CreateConnnection.getConnection();
-			String sql = "SELECT no, type, name, subject, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI:SS'), num "
-					+ "FROM (SELECT no, type, name, subject, regdate, rownum as num "
-					+ "FROM (SELECT /*+ INDEX_DESC(project_notice pro_no_pk)*/no, type, name, subject, regdate "
-					+ "FROM project_notice)) "
-					+ "WHERE num BETWEEN ? AND ?";
-			ps = conn.prepareStatement(sql);
-			int rowSize = 10;
-			int start = (rowSize * page) - (rowSize - 1);
-			int end = rowSize * page;
-			
-			ps.setInt(1, start);
-			ps.setInt(2, end);
-			
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				NoticeVO vo = new NoticeVO();
-				vo.setNo(rs.getInt(1));
-				vo.setType(rs.getInt(2));
-				vo.setName(rs.getString(3));
-				vo.setSubject(rs.getString(4));
-				vo.setDbday(rs.getString(5));
-				vo.setHit(rs.getInt(6));
-				list.add(vo);
-			}
-			rs.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			CreateConnnection.disConnection(conn, ps);
-		}
-		return list;
-	}
+	public List<NoticeVO> noticeListData(int page)
+	   {
+		   List<NoticeVO> list=new ArrayList<NoticeVO>();
+		   try
+		   {
+			   conn=CreateConnnection.getConnection();
+			   String sql="SELECT no,type,name,subject,TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS'),hit,num "
+					     +"FROM (SELECT no,type,name,subject,regdate,hit,rownum as num "
+					     +"FROM (SELECT /*+  INDEX_DESC(project_notice pro_no_pk)*/no,type,name,subject,regdate,hit "
+					     +"FROM project_notice)) "
+					     +"WHERE num BETWEEN ? AND ?";
+			   ps=conn.prepareStatement(sql);
+			   int rowSize=10;
+			   int start=(rowSize*page)-(rowSize-1);
+			   int end=rowSize*page;
+			   
+			   ps.setInt(1, start);
+			   ps.setInt(2, end);
+			   ResultSet rs=ps.executeQuery();
+			   while(rs.next())
+			   {
+				   NoticeVO vo=new NoticeVO();
+				   vo.setNo(rs.getInt(1));
+				   vo.setType(rs.getInt(2));
+				   vo.setName(rs.getString(3));
+				   vo.setSubject(rs.getString(4));
+				   vo.setDbday(rs.getString(5));
+				   vo.setHit(rs.getInt(6));
+				   list.add(vo);
+			   }
+			   rs.close();
+		   }catch(Exception ex)
+		   {
+			   ex.printStackTrace();
+		   }
+		   finally
+		   {
+			   CreateConnnection.disConnection(conn, ps);
+		   }
+		   return list;
+	   }
 	
 	public int noticeTotalPage() {
 		int total = 0;
@@ -101,5 +106,141 @@ public class NoticeDAO {
 		}
 		
 		return total;
+	}
+	/*
+	    NO      NOT NULL NUMBER         
+		TYPE             NUMBER         
+		NAME    NOT NULL VARCHAR2(34)   
+		SUBJECT NOT NULL VARCHAR2(1000) 
+		CONTENT NOT NULL CLOB           
+		REGDATE          DATE           
+		HIT              NUMBER
+		
+		오라클 : JOIN(inner, outer), Subquery 사용법
+		        View(inline View) => Top-n
+		        --------------------------- 한개의 기능을 수행시 => SQL조합
+		자바 : 변수, 연산자, 제어문, 메소드 ..
+		      라이브러리 : Collection
+		
+		JSP : 내장객체 (request, response, session, cookie)
+		      EL, JSTL, MVC 구조
+		
+		JavaScript : 변수, 연산자, 제어문, 함수, JQUERY, AJAX
+		
+		=> DAO(DBCP) => MyBatis => JPA
+		=> MVC => Spring => Spring-Boot
+		=> Jquery => Vue => React
+	 */
+	public void noticeInsert(NoticeVO vo) {
+		try {
+			conn = CreateConnnection.getConnection();
+			String sql = "INSERT INTO project_notice VALUES("
+					+ "(SELECT NVL(MAX(no)+1,1) FROM project_notice), ?, ?, ?, ?, SYSDATE, 0)";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, vo.getType());
+			ps.setString(2, vo.getName());
+			ps.setString(3, vo.getSubject());
+			ps.setString(4, vo.getContent());
+			ps.executeUpdate(); // 오토커밋 (인서트여러개 -> 트랜잭션 사용추천)
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CreateConnnection.disConnection(conn, ps);
+		}
+	}
+	
+	public void noticeDelete(int no) {
+		try {
+			conn = CreateConnnection.getConnection();
+			String sql = "DELETE FROM project_notice "
+						+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CreateConnnection.disConnection(conn, ps);
+		}
+	}
+	
+	public NoticeVO noticeUpdateData(int no) {
+		NoticeVO vo = new NoticeVO();
+		try {
+			conn = CreateConnnection.getConnection();
+			String sql = "SELECT no, name, subject, content, type "
+					+ "FROM project_notice "
+					+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			vo.setNo(rs.getInt(1));
+			vo.setName(rs.getString(2));
+			vo.setSubject(rs.getString(3));
+			vo.setContent(rs.getString(4));
+			vo.setType(rs.getInt(5));
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CreateConnnection.disConnection(conn, ps);
+		}
+		return vo;
+	}
+	
+	public void noticeUpdate(NoticeVO vo) {
+		try {
+			conn = CreateConnnection.getConnection();
+			String sql = "UPDATE project_notice SET "
+						+ "type=?, subject=?, content=? "
+						+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, vo.getType());
+			ps.setString(2, vo.getSubject());
+			ps.setString(3, vo.getContent());
+			ps.setInt(4, vo.getNo());
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CreateConnnection.disConnection(conn, ps);
+		}
+	}
+	
+	public NoticeVO noticeDetailData(int no) {
+		NoticeVO vo = new NoticeVO();
+		try {
+			conn = CreateConnnection.getConnection();
+			String sql = "UPDATE project_notice SET "
+					+ "hit = hit + 1 "
+					+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no);
+			ps.executeUpdate();
+			
+			sql = "SELECT no, name, subject, content, type, hit, TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS') "
+					+ "FROM project_notice "
+					+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			vo.setNo(rs.getInt(1));
+			vo.setName(rs.getString(2));
+			vo.setSubject(rs.getString(3));
+			vo.setContent(rs.getString(4));
+			vo.setType(rs.getInt(5));
+			vo.setHit(rs.getInt(6));
+			vo.setDbday(rs.getString(7));
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CreateConnnection.disConnection(conn, ps);
+		}
+		return vo;
 	}
 }
