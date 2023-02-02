@@ -195,9 +195,10 @@ $(function(){
 					</tr>
 					<tr>
 						<th class="text-right" width=15%>성별</th>
-						<td width=85% class="inline"><input type=radio value="남자"
-							name=sex ${vo.sex=='남자'?"checked":"" }>남자 <input type=radio
-							value="남자" name=sex ${vo.sex=='여자'?"checked":"" }>여자</td>
+						<td width=85% class="inline">
+						<input type=radio value="남자" name=sex ${vo.sex=='남자'?"checked":""}>남자 
+						<input type=radio value="여자" name=sex ${vo.sex=='여자'?"checked":""}>여자
+						</td>
 					</tr>
 					<tr>
 						<th class="text-right" width=15%>생년월일</th>
