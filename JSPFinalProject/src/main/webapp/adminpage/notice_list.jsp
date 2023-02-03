@@ -29,7 +29,7 @@
   <main class="container clear">
   <h2 class="sectiontitle">공지사항</h2>
   <div style="height: 5px"></div>
-  <div style="height: 700px">
+  <div style="height: 550px">
   <table class="table">
     <tr>
       <td>

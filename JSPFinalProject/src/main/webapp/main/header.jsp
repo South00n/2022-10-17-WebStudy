@@ -128,7 +128,7 @@ $(function(){
 						<%-- .do가 나오면 DispatcherServlet 호출 --%>
 						<c:if test="${sessionScope.id != null }">
 							<li><a href="pages/full-width.html">맛집추천</a></li>
-							<li><a href="pages/sidebar-left.html">맛집예약</a></li>
+							<li><a href="../reserve/reserve_main.do">맛집예약</a></li>
 						</c:if>
 					</ul></li>
 				<li><a class="drop" href="#">여행</a>

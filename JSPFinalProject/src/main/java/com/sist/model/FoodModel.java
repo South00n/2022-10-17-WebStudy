@@ -69,6 +69,12 @@ public class FoodModel {
 		ArrayList<FoodVO> list = dao.foodListData(Integer.parseInt(cno));
 		request.setAttribute("list", list);
 		CategoryVO vo = dao.categoryInfoData(Integer.parseInt(cno));
+		
+		LikeDAO ldao = new LikeDAO();
+		for(FoodVO fvo : list) {
+			fvo.setCount(ldao.foodLikeCount(fvo.getFno()));
+		}
+		
 		request.setAttribute("vo", vo);
 		// include하는 파일 전송
 		request.setAttribute("main_jsp", "../food/food_list.jsp");
@@ -134,8 +140,20 @@ public class FoodModel {
 		   List<RecipeVO> nList=dao.food_recipe_data(type);
 		   request.setAttribute("nList1", nList); // 커먼스모델이랑 충돌 nList면
 		   
+		   HttpSession session = request.getSession();
+		   String id = (String)session.getAttribute("id");
+		   JjimDAO jdao = new JjimDAO();
+		   int jcount = jdao.jjimCount(Integer.parseInt(fno), id);
+		   request.setAttribute("jjim_count", jcount);
+		   
+		   LikeDAO ldao = new LikeDAO();
+		   int mc = ldao.myLikeCount(Integer.parseInt(fno), id);
+		   //int tc=  ldao.likeCount();
+		   int tc = ldao.foodLikeCount(Integer.parseInt(fno));
+		   
+		   request.setAttribute("like_count", mc);
+		   request.setAttribute("like_total", tc);
 		   CommonsModel.footerData(request);
-
 		   return "../main/main.jsp";
 	   }
 	}
