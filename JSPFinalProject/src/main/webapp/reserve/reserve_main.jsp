@@ -6,6 +6,31 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type:'POST',
+		url:'../reserve/food_list.do',
+		data:{"fd":'한식'},
+		success:function(response) {
+			$('#food_list').html(response); // JSON (스프링)
+		}
+	})
+	
+	$('.foods').click(function(){
+		let fd = $(this).text();
+		$.ajax({
+			type:'POST',
+			url:'../reserve/food_list.do',
+			data:{"fd": fd},
+			success:function(response) {
+				$('#food_list').html(response); // JSON (스프링)
+			}
+		})
+	})
+})
+</script>
 </head>
 <body>
 <div class="wrapper row3">
@@ -26,13 +51,57 @@
 	<div style="height: 5px"></div>
     <table class="table" style="width: 100%; height: 700px">
    	  <tr>
-   	    <td class="success" width=30% height="500"></td>
-   	    <td class="info" width=40% height="500"></td>
-   	    <td class="danger" width=30% rowspan="2" height="700"></td>
+   	    <td class="success" width=30% height="500">
+   	      <table class="table">
+   	        <caption><h3>맛집 정보</h3></caption>
+   	        <tr>
+   	          <td>
+   	            <span class="btn btn-xs btn-danger foods">한식</span>
+   	            <span class="btn btn-xs btn-info foods">양식</span>
+   	            <span class="btn btn-xs btn-primary foods" >중식</span>
+   	            <span class="btn btn-xs btn-success foods">일식</span>
+   	            <span class="btn btn-xs btn-warning foods">기타</span>
+   	          </td>
+   	        </tr>
+   	        <tr>
+   	          <td>
+   	            <div id="food_list" style="height: 450px; overflow-y:scroll">
+   	              
+   	            </div>
+   	          </td>
+   	        </tr>
+   	      </table>
+   	    </td>
+   	    <td class="info" width=40% height="500">
+   	      <table class="table">
+   	        <caption><h3>예약일 정보</h3></caption>
+   	      </table>
+   	    </td>
+   	    <td class="danger" width=30% rowspan="2" height="700">
+   	      <table class="table">
+   	        <caption><h3>예약 정보</h3></caption>
+   	        <tr>
+   	          <td class="text-center">
+   	            <img src="../reserve/black.png" style="width: 250px; height: 200px" id="food_img">
+   	          </td>
+   	        </tr>
+   	        <tr>
+   	       	  <td><span id="food_name"></span></td>
+   	        </tr>
+   	      </table>
+   	    </td>
    	  </tr>
    	  <tr>
-   	    <td class="default" width="35%" height="200"></td>
-   	    <td class="warning" width="35%" height="200"></td>
+   	    <td class="default" width="35%" height="200">
+   	      <table class="table">
+   	        <caption><h3>시간 정보</h3></caption>
+   	      </table>
+   	    </td>
+   	    <td class="warning" width="35%" height="200">
+   	      <table class="table">
+   	        <caption><h3>인원 정보</h3></caption>
+   	      </table>
+   	    </td>
    	  </tr>
     </table>
   </main>
