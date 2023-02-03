@@ -19,6 +19,15 @@ $(function(){
 		let name = $(this).attr("data-name");
 		$('#food_img').attr("src", img)
 		$('#food_name').text(name)
+		
+		$.ajax({
+			type:'post',
+			url: '../reserve/reserve_date.do',
+			success: function(response) {
+				$('#select_date').html(response)
+			}
+		
+		})
 	})
 })
 </script>

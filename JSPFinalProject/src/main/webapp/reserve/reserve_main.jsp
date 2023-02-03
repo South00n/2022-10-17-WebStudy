@@ -75,18 +75,27 @@ $(function(){
    	    <td class="info" width=40% height="500">
    	      <table class="table">
    	        <caption><h3>예약일 정보</h3></caption>
+   	        <tr>
+   	          <td>
+   	            <div id = "select_date"></div>
+   	          </td>
+   	        </tr>
    	      </table>
    	    </td>
    	    <td class="danger" width=30% rowspan="2" height="700">
    	      <table class="table">
    	        <caption><h3>예약 정보</h3></caption>
    	        <tr>
-   	          <td class="text-center">
+   	          <td class="text-center" colspan="2">
    	            <img src="../reserve/black.png" style="width: 250px; height: 200px" id="food_img">
    	          </td>
    	        </tr>
    	        <tr>
-   	       	  <td><span id="food_name"></span></td>
+   	       	  <td class="text-left" colspan="2"><span id="food_name" style="color:black"></span></td>
+   	        </tr>
+   	        <tr>
+   	          <th width="30%">예약일</th>
+   	          <td width=70%><span id ="r_day"></span></td>
    	        </tr>
    	      </table>
    	    </td>
