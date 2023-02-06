@@ -143,38 +143,60 @@ public class ReserveModel {
 		OK                  CHAR(1)      	'n'
 		REGDATE             DATE 			SYSDATE // 5개는 설정해야해
 	   */
-	  String fno = request.getParameter("fno");
-	  String rdate = request.getParameter("reserveday");
-	  String rtime = request.getParameter("reservetime");
-	  String inwon = request.getParameter("reserveinwon");
-	  HttpSession session = request.getSession();
-	  String id = (String)session.getAttribute("id");
+		// TODO: handle exception
+	  	try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (Exception e) {}
+		String fno = request.getParameter("fno");
+		String rdate = request.getParameter("reserveday");
+		String rtime = request.getParameter("reservetime");
+		String inwon = request.getParameter("reserveinwon");
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String reserve_no = sdf.format(date) + fno; // 예약번호
+		ReserveVO vo = new ReserveVO();
+		vo.setFno(Integer.parseInt(fno));
+		vo.setRdate(rdate);
+		vo.setRtime(rtime);
+		vo.setInwon(Integer.parseInt(inwon));
+		vo.setId(id);
+		vo.setReserve_no(reserve_no);
+		//DAO연동
+		ReserveDAO dao = new ReserveDAO();
+		dao.reserveOk(vo);
 	  
-	  Date date = new Date();
-	  SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	  String reserve_no = sdf.format(date) + fno; // 예약번호
 	  
-	  ReserveVO vo = new ReserveVO();
-	  vo.setFno(Integer.parseInt(fno));
-	  vo.setRdate(rdate);
-	  vo.setRtime(rtime);
-	  vo.setInwon(Integer.parseInt(inwon));
-	  vo.setId(id);
-	  vo.setReserve_no(reserve_no);
-	  
-	  //DAO연동
-	  ReserveDAO dao = new ReserveDAO();
-	  
-	  return "redirect:../mypage/reserve.do";
+	  return "redirect:../mypage/mypage_reserve.do";
   }
-  @RequestMapping("mypage/reserve.do")
+  @RequestMapping("mypage/mypage_reserve.do")
   public String mypage_reserve(HttpServletRequest request, HttpServletResponse response) {
 	  
+	  HttpSession session = request.getSession();
+	  String id = (String)session.getAttribute("id");
+	  ReserveDAO dao = new ReserveDAO();
+	  List<ReserveVO> list =dao.reserveMypageData(id);
 	  
-	  
+	  request.setAttribute("list", list);
+	  request.setAttribute("mypage_jsp", "../mypage/mypage_reserve.jsp");
+	  request.setAttribute("main_jsp", "../mypage/mypage_main.jsp");
+	  CommonsModel.footerData(request);
 	  return "../main/main.jsp";
   }
-  
+  @RequestMapping("adminpage/admin_reserve.do")
+  public String admin_reserve(HttpServletRequest request, HttpServletResponse response) {
+	  
+	  ReserveDAO dao = new ReserveDAO();
+	  List<ReserveVO> list = dao.reserveAdminData();
+	  
+	  request.setAttribute("list", list);
+	  request.setAttribute("admin_jsp", "../adminpage/admin_reserve.jsp");
+	  request.setAttribute("main_jsp", "../adminpage/admin_main.jsp");
+	  CommonsModel.footerData(request);
+	  return "../main/main.jsp";
+  }
 }
 
 
