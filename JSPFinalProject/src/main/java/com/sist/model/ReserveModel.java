@@ -48,6 +48,7 @@ public class ReserveModel {
 		
 		String syear = request.getParameter("year");
 		String smonth = request.getParameter("month");
+		String fno = request.getParameter("fno");
 		
 		if(syear == null) {
 			syear = strYear;
@@ -82,8 +83,38 @@ public class ReserveModel {
 		request.setAttribute("strWeek", strWeek);
 		//request.setAttribute("year", year); => 예약 가능한 날 (food_location) => 예약일 => 시간 / 시간 => 인원
 		
+		// 23.02.06 10시
+		ReserveDAO dao = new ReserveDAO();
+		String rdate = dao.reserveDayData(Integer.parseInt(fno));
+		int[] rdays = new int[32];
+		String[] temp = rdate.split(",");
+		for(String ss:temp) {
+			// 예약가능한 날짜가 오늘보다 크거나 같아야해
+			if(Integer.parseInt(ss)>=day) {
+				rdays[Integer.parseInt(ss)]=1;
+			}
+		}
+		
+		request.setAttribute("rdays", rdays);
 		return "../reserve/reserve_date.jsp";
 	}
 	
-	
+	@RequestMapping("reserve/reserve_time_do")
+	public String reserve_time(HttpServletRequest request, HttpServletResponse response) {
+		
+		String day = request.getParameter("day");
+		
+		List<String> reserve_time = new ArrayList<String>();
+		// DAO 연결
+		ReserveDAO dao = new ReserveDAO();
+		String dd = dao.reserveTimeData(Integer.parseInt(day));
+		// 1, 2, 3
+		StringTokenizer st = new StringTokenizer(dd);
+		while(st.hasMoreTokens()) {
+			String ss = dao.reserveTimeData(Integer.parseInt(st.nextToken()));
+			reserve_time.add(ss);
+		}
+		request.setAttribute("rtime", reserve_time);
+		return "../reserve/reserve_time.jsp";
+	}
 }

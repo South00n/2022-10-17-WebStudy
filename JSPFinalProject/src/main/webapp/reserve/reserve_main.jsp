@@ -97,6 +97,10 @@ $(function(){
    	          <th width="30%">예약일</th>
    	          <td width=70%><span id ="r_day"></span></td>
    	        </tr>
+   	        <tr>
+   	          <th width="30%">예약시간</th>
+   	          <td width=70%><span id ="r_time"></span></td>
+   	        </tr>
    	      </table>
    	    </td>
    	  </tr>
@@ -104,6 +108,11 @@ $(function(){
    	    <td class="default" width="35%" height="200">
    	      <table class="table">
    	        <caption><h3>시간 정보</h3></caption>
+   	        <tr>
+   	        	<td>
+   	        		<div id = "select_time"></div>
+   	        	</td>
+   	        </tr>
    	      </table>
    	    </td>
    	    <td class="warning" width="35%" height="200">

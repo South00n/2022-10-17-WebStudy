@@ -17,16 +17,17 @@ $(function(){
 	$('.trs').click(function(){
 		let img = $(this).attr("data-img")
 		let name = $(this).attr("data-name");
+		let fno = $(this).attr("data-fno")
 		$('#food_img').attr("src", img)
 		$('#food_name').text(name)
 		
 		$.ajax({
 			type:'post',
 			url: '../reserve/reserve_date.do',
+			data:{"fno":fno}
 			success: function(response) {
 				$('#select_date').html(response)
 			}
-		
 		})
 	})
 })
@@ -39,7 +40,7 @@ $(function(){
       <th class="text-center">업체명</th>
     </tr>
     <c:forEach var="vo" items="${list }">
-      <tr class="trs" data-img="${vo.poster }" data-name="${vo.name }">
+      <tr class="trs" data-img="${vo.poster }" data-name="${vo.name }" data-fno="${vo.fno }">
         <td class="text-center">
           <img src="${vo.poster }" style="width: 30px; height: 30px">
         </td>
