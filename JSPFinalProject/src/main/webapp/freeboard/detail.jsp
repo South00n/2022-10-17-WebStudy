@@ -21,7 +21,7 @@
 				i = 1
 			} else {
 				$('#del').hide();
-				$('#delete').text("수정");
+				$('#delete').text("삭제");
 				i = 0
 			}
 		})
@@ -216,7 +216,7 @@
 							<td>
 								<form method="post" action="../freeboard/reply_insert.do">
 									<input type=hidden name="bno" value="${vo.no }">
-									<textarea rows="3" cols="80" name="msg" style="float: left"></textarea>&nbsp;
+									<textarea rows="3" cols="75" name="msg" style="float: left"></textarea>&nbsp;
 									<input type="submit" value="댓글쓰기" class="btn btn-sm btn-danger" style="height: 65px">
 								</form>
 							</td>

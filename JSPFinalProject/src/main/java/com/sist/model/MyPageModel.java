@@ -43,6 +43,5 @@ public class MyPageModel {
 		dao.jjimDelete(Integer.parseInt(jno));
 		
 		return "redirect:jjim_list.do";
-		
 	}
 }
