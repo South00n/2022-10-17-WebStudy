@@ -169,9 +169,9 @@ public class ReserveModel {
 		dao.reserveOk(vo);
 	  
 	  
-	  return "redirect:../mypage/mypage_reserve.do";
+	  return "redirect:../mypage/reserve.do";
   }
-  @RequestMapping("mypage/mypage_reserve.do")
+  @RequestMapping("mypage/reserve.do")
   public String mypage_reserve(HttpServletRequest request, HttpServletResponse response) {
 	  
 	  HttpSession session = request.getSession();
@@ -196,6 +196,16 @@ public class ReserveModel {
 	  request.setAttribute("main_jsp", "../adminpage/admin_main.jsp");
 	  CommonsModel.footerData(request);
 	  return "../main/main.jsp";
+  }
+  
+  @RequestMapping("reserve/reserve_delete.do")
+  public String reserve_delete(HttpServletRequest request, HttpServletResponse response) {
+	  String rno = request.getParameter("rno");
+	  // DB연동
+	  ReserveDAO dao = new ReserveDAO();
+	  dao.reserveDelete(Integer.parseInt(rno));
+	  
+	  return "redirect:../mypage/reserve.do";
   }
 }
 
