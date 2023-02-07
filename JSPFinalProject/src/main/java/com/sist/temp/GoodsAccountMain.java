@@ -71,10 +71,12 @@ public class GoodsAccountMain {
 		//System.out.println(s);
 		//String s = gm.reserve_time();
 		//System.out.println(s);
-		for(int i=31; i<=31; i++) {
+		for(int i=1; i<=31; i++) {
 			gm.foodReserveTimeInsert(i, gm.reserve_time());
 		}
 		System.out.println("저장 완료");
+		
+		
 	}
 	public void foodReserveTimeInsert(int rdate, String time) {
 		try {
