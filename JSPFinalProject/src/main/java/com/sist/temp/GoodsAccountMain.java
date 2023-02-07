@@ -58,15 +58,15 @@ public class GoodsAccountMain {
 		}
 		System.out.println("저장 완료");*/
 		
-		/*for(int i=1; i<=6184; i++) {
+		for(int i=1; i<=6184; i++) {
 			int rand = (int)(Math.random()*40)+10; // 재고수량?
 			gm.goodsAccountInsert(i, rand);
 			try {
-				Thread.sleep(30);
+				Thread.sleep(10);
 			} catch (Exception e) {}
 			System.out.println("i=" + i);
 		}
-		System.out.println("수량 추가 종료!!");*/
+		System.out.println("수량 추가 종료!!");
 		//String s = gm.reserve_day();
 		//System.out.println(s);
 		//String s = gm.reserve_time();
