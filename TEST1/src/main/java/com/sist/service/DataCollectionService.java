@@ -1,7 +1,6 @@
 package com.sist.service;
 
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
+import java.sql.Time;
 import java.util.StringTokenizer;
 
 import org.jsoup.Jsoup;
@@ -9,29 +8,26 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.sist.dao.ExhibitionVO;
-import com.sist.dao.PictureDAO;
-import com.sist.dao.PictureVO;
-
 
 public class DataCollectionService {
 
    public static void main(String[] args) {
       DataCollectionService ds = new DataCollectionService();
       //ds.pictureGetData();
-      ds.exhibitionGetData();
+      //ds.exhibitionGetData();
+      ds.test();
    }
    
+   /*
    public void pictureGetData() {
       int cnt = 0;
 	  PictureDAO dao = new PictureDAO(); 
       try {
     	 
-<<<<<<< HEAD
          for(int i = 1; i < 50; i++) {
-=======
+        	 
+         }
          for(int i = 20; i < 50; i++) {
->>>>>>> branch 'master' of https://github.com/South00n/2022-10-17-WebStudy.git
             Document doc = Jsoup.connect("https://www.opengallery.co.kr/discover/?p= " + i+ " &f_ts=&f_ss=&f_os=&f_ps=&f_ra=false&f_pa=false&r_ex=0&").get();
             Elements link = doc.select("div#discoverList a.discoverCard-a");
             
@@ -54,13 +50,6 @@ public class DataCollectionService {
             	   
             	   s2 = s2 + pic.get(k).attr("src") + "^";
                }
-               /*
-               String s3 = content1.get(0).text();
-               
-               if(s3.equals("첫 렌탈이라면 무조건 33,000원!")) {
-                  s3 = content1.get(1).text();
-               }
-               */
                System.out.println(pic.get(0).attr("src"));
                System.out.println(s2);
                System.out.println(title.text());
@@ -92,26 +81,6 @@ public class DataCollectionService {
       } catch (Exception e) {}
       
    }
-   /*
-    PENO    NOT NULL NUMBER        
-	POSTER  NOT NULL VARCHAR2(260) 
-	TITLE   NOT NULL VARCHAR2(150) 
-	TITLE2           VARCHAR2(150) 
-	KIND             VARCHAR2(60)  
-	PERIOD  NOT NULL VARCHAR2(100) 
-	LOC     NOT NULL VARCHAR2(60)  
-	LOC2             VARCHAR2(100) 
-	AREA             VARCHAR2(200) 
-	AREA2            VARCHAR2(200) 
-	ITEM             CLOB          
-	HOST             VARCHAR2(450) 
-	URL              VARCHAR2(200) 
-	PRICE            CLOB          
-	TIME             VARCHAR2(400) 
-	HASHTAG          CLOB          
-	GOOD             NUMBER        
-	CONTENT          CLOB 
-    */
    
    public void exhibitionGetData() {
 	   PictureDAO dao = new PictureDAO();
@@ -121,13 +90,8 @@ public class DataCollectionService {
 		   Document doc = Jsoup.connect("https://www.showala.com/ex/ex_list.php").get();
 		   Elements src = doc.select("a.menu_dep3_link");
 		   
-<<<<<<< HEAD
-		   for(int i =948; i < src.size(); i++) {
-			   //if(i == 109 || i == 479 || i == 614 || i == 988 ) continue; // 오류나는부분 스킵
-=======
 		   for(int i =111; i < src.size(); i++) {
 			   //if(i == 107 || i == 479 || i == 614 || i == 988 ) continue; // 오류나는부분 스킵
->>>>>>> branch 'master' of https://github.com/South00n/2022-10-17-WebStudy.git
 			   ExhibitionVO vo = new ExhibitionVO();
 			   StringTokenizer st = new StringTokenizer("https://www.showala.com" + src.get(i).attr("href"));
 			   //String s = "https://www.showala.com" + src.get(i).attr("href");
@@ -209,7 +173,7 @@ public class DataCollectionService {
 			   vo.setTime(time.text());
 			   //System.out.println(time.text());
 			   Element hashtag = doc2.selectFirst("div.tag_wrap");
-			   bw.write(hashtag.text() + "\n");
+			   bw.write(hashtag.text) + "\n");
 			   vo.setHashtag(hashtag.text());
 			   
 			   Element content = doc2.selectFirst("div.tab_con_edit1");
@@ -223,5 +187,67 @@ public class DataCollectionService {
 		   
 	   } catch (Exception e) {}
    }
+   */
    
+   
+   public void test() {
+	   try {
+		   for(int i=1; i<=5; i++ ) {
+			   
+			   Document doc = Jsoup.connect("http://www.kajawine.kr/shop/list.php?ca_id=10&sort=&sortodr=&type_color=&it_price=&it_opt4=&it_opt9=&page=" + i).get();
+			   //System.out.println(doc.html());
+			   Elements link = doc.select("div.listimg a");
+			   for(int j=5; j<link.size(); j++) {
+				   
+				   if(i==1 && j==8) {
+					   continue;
+				   }
+				   
+				   // System.out.println(link.get(j).attr("href"));
+				   StringTokenizer st = new StringTokenizer(link.get(j).attr("href"));
+				   Document doc2 = Jsoup.connect(st.nextToken()).get();
+				   System.out.println(j-4);
+				   
+				   Element image = doc2.selectFirst("div.goodsImg img");
+				   System.out.println(image.attr("src"));
+				   
+				   Elements name = doc2.select("div.goods_name p");
+				   System.out.println(name.get(0).text());
+				   System.out.println(name.get(1).text());
+				   
+				   Elements option = doc2.select("div.goods_option td");
+				   
+				   // System.out.println(option.size());
+				   
+				   /*
+				   String first = "", second = "", third = "";
+				   first = option.get(0).text();
+				   System.out.println(first);*/
+				   
+				   Elements answer1 = doc2.select("div.goods_option span"); 
+				   
+				   for(int k=0; k<answer1.size(); k++) {
+					   System.out.println(answer1.get(k).text());
+				   }
+				   
+				   /*
+				   if(first.equals("원산지")) {
+					   System.out.println(answer1.get(0).text());
+				   } else if (first.equals("용량")) {
+					   System.out.println(answer1.get(0).text());
+				   } else if (first.equals("종류")) {
+					   System.out.println(answer1.get(0).text());
+				   } else if (first.equals("알콜도수")) {
+					   System.out.println(answer1.get(0).text());
+				   }*/
+				   
+			   }
+			   System.out.println();
+		   }
+				   
+	   } catch (Exception e) {
+		// TODO: handle exception
+	   }
+              
+   }
 } 
